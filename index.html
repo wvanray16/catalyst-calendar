@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catalyst Calendar — Aug–Dec 2026</title>
+<style>
+:root{
+  color-scheme: light;
+  --surface-1:#fcfcfb; --page:#f9f9f7;
+  --text-primary:#0b0b0b; --text-secondary:#52514e; --text-muted:#898781;
+  --grid:#e1e0d9; --axis:#c3c2b7; --border:rgba(11,11,11,0.10);
+  --chip-bg:#ffffff; --chip-off:#f2f1ed;
+  --c-earnings:#2a78d6; --c-dividend:#eb6834; --c-macro:#1baf7a; --c-opex:#eda100;
+  --c-product:#e87ba4; --c-index:#008300; --c-supply:#4a3aa7; --c-conf:#e34948; --c-closed:#898781;
+  --good:#0ca30c; --warning:#fab219; --critical:#d03b3b;
+  --shadow:0 1px 2px rgba(11,11,11,.05), 0 4px 12px rgba(11,11,11,.04);
+}
+html[data-theme="dark"]{
+  color-scheme: dark;
+  --surface-1:#1a1a19; --page:#0d0d0d;
+  --text-primary:#ffffff; --text-secondary:#c3c2b7; --text-muted:#898781;
+  --grid:#2c2c2a; --axis:#383835; --border:rgba(255,255,255,0.10);
+  --chip-bg:#232322; --chip-off:#1f1f1e;
+  --c-earnings:#3987e5; --c-dividend:#d95926; --c-macro:#199e70; --c-opex:#c98500;
+  --c-product:#d55181; --c-index:#008300; --c-supply:#9085e9; --c-conf:#e66767; --c-closed:#898781;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 4px 12px rgba(0,0,0,.3);
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--page); color:var(--text-primary);
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:14px; line-height:1.5; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1240px; margin:0 auto; padding:28px 20px 80px}
+h1{font-size:26px; font-weight:650; margin:0 0 4px; letter-spacing:-.01em}
+h2{font-size:15px; font-weight:620; margin:0 0 3px; letter-spacing:-.005em}
+.sub{color:var(--text-secondary); font-size:13px; margin:0}
+.card{background:var(--surface-1); border:1px solid var(--border); border-radius:12px; padding:18px 20px; margin-bottom:16px; box-shadow:var(--shadow)}
+.hdr{display:flex; justify-content:space-between; align-items:flex-start; gap:16px; flex-wrap:wrap; margin-bottom:20px}
+.themebtn{background:var(--chip-bg); border:1px solid var(--border); color:var(--text-secondary); border-radius:8px; padding:7px 13px; font:inherit; font-size:12.5px; cursor:pointer}
+.themebtn:hover{color:var(--text-primary)}
+
+/* stat tiles */
+.tiles{display:grid; grid-template-columns:repeat(auto-fit,minmax(168px,1fr)); gap:12px; margin-bottom:16px}
+.tile{background:var(--surface-1); border:1px solid var(--border); border-radius:12px; padding:15px 17px; box-shadow:var(--shadow)}
+.tile .lbl{font-size:11.5px; text-transform:uppercase; letter-spacing:.055em; color:var(--text-muted); font-weight:600; margin-bottom:7px}
+.tile .val{font-size:29px; font-weight:640; letter-spacing:-.02em; line-height:1.05}
+.tile .foot{font-size:12px; color:var(--text-secondary); margin-top:5px}
+
+/* filters */
+.frow{display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin-bottom:11px}
+.frow:last-child{margin-bottom:0}
+.flabel{font-size:11.5px; text-transform:uppercase; letter-spacing:.055em; color:var(--text-muted); font-weight:600; width:94px; flex:none}
+.chip{
+  display:inline-flex; align-items:center; gap:6px; padding:5px 11px; border-radius:999px;
+  border:1px solid var(--border); background:var(--chip-bg); color:var(--text-secondary);
+  font-size:12.5px; font-weight:520; cursor:pointer; user-select:none; transition:background .12s,color .12s;
+}
+.chip:hover{color:var(--text-primary)}
+.chip.off{background:var(--chip-off); color:var(--text-muted); opacity:.55}
+.chip .dot{width:9px; height:9px; border-radius:3px; flex:none}
+.chip .n{font-size:11px; color:var(--text-muted); font-variant-numeric:tabular-nums}
+.chip.tick{font-weight:620; font-size:12px; letter-spacing:.01em}
+.mini{background:none; border:none; color:var(--text-secondary); font:inherit; font-size:12px; cursor:pointer; text-decoration:underline; text-underline-offset:2px; padding:2px 4px}
+.mini:hover{color:var(--text-primary)}
+
+/* density chart */
+.chart{position:relative; margin-top:14px}
+.bars{display:flex; align-items:flex-end; gap:3px; height:132px; border-bottom:1px solid var(--axis); padding-bottom:0}
+.wk{flex:1; display:flex; flex-direction:column; justify-content:flex-end; gap:2px; cursor:default; min-width:0; position:relative}
+.wk .seg{border-radius:2px; min-height:3px}
+.wk .seg.top{border-top-left-radius:4px; border-top-right-radius:4px}
+.wk:hover .seg{filter:brightness(1.12)}
+.xaxis{display:flex; gap:3px; margin-top:7px}
+.xaxis span{flex:1; text-align:center; font-size:10.5px; color:var(--text-muted); font-variant-numeric:tabular-nums; overflow:hidden; white-space:nowrap}
+.ylab{position:absolute; left:-4px; top:-6px; font-size:11px; color:var(--text-muted)}
+
+/* ticker map */
+.map{margin-top:16px}
+.maprow{display:grid; grid-template-columns:96px 1fr; align-items:center; gap:10px; height:29px}
+.maprow.mkt{border-top:1px solid var(--grid); margin-top:5px; padding-top:2px; height:33px}
+.maprow .tk{font-size:12px; font-weight:620; display:flex; justify-content:space-between; align-items:baseline; gap:6px; overflow:hidden}
+.maprow .tk .px{font-size:10.5px; font-weight:500; color:var(--text-muted); font-variant-numeric:tabular-nums}
+.track{position:relative; height:100%; border-radius:5px}
+.track::before{content:''; position:absolute; left:0; right:0; top:50%; height:1px; background:var(--grid)}
+.mk{position:absolute; top:50%; transform:translate(-50%,-50%); width:11px; height:11px; border-radius:50%; box-shadow:0 0 0 2px var(--surface-1); cursor:pointer}
+.mk.t1{width:14px; height:14px}
+.mk.t3{width:8px; height:8px}
+.mk.est{background:var(--surface-1) !important}
+.mk.rng{border-radius:3px; height:6px; transform:translateY(-50%); left:auto; opacity:.26; box-shadow:none; pointer-events:none}
+.monthgrid{position:relative; height:16px; margin-left:106px; margin-bottom:2px}
+.monthgrid span{position:absolute; font-size:10.5px; color:var(--text-muted); transform:translateX(-50%); white-space:nowrap}
+.vline{position:absolute; top:0; bottom:0; width:1px; background:var(--grid)}
+.today{position:absolute; top:0; bottom:0; width:2px; background:var(--critical); opacity:.55; border-radius:1px}
+
+/* agenda */
+.month{margin-top:22px}
+.month:first-of-type{margin-top:6px}
+.mhdr{display:flex; align-items:baseline; gap:9px; padding-bottom:7px; border-bottom:1px solid var(--grid); margin-bottom:3px}
+.mhdr h3{font-size:14.5px; font-weight:640; margin:0; letter-spacing:-.005em}
+.mhdr .cnt{font-size:12px; color:var(--text-muted); font-variant-numeric:tabular-nums}
+.ev{display:grid; grid-template-columns:64px 1fr; gap:13px; padding:11px 0; border-bottom:1px solid var(--grid); align-items:start}
+.ev:last-child{border-bottom:none}
+.ev .dt{font-size:12.5px; font-variant-numeric:tabular-nums; color:var(--text-secondary); font-weight:560; padding-top:1px}
+.ev .dt .dow{display:block; font-size:10.5px; color:var(--text-muted); font-weight:500}
+.ev .bd{min-width:0}
+.ev .top{display:flex; flex-wrap:wrap; align-items:center; gap:7px; margin-bottom:3px}
+.tag{display:inline-flex; align-items:center; gap:5px; font-size:11px; font-weight:600; letter-spacing:.02em; color:var(--text-secondary); padding:2px 7px; border-radius:5px; background:var(--chip-off); white-space:nowrap}
+.tag .dot{width:8px; height:8px; border-radius:2.5px; flex:none}
+.tkbadge{font-size:11.5px; font-weight:700; letter-spacing:.02em; padding:2px 7px; border-radius:5px; background:var(--chip-off); color:var(--text-primary)}
+.ev .ttl{font-size:13.5px; font-weight:580; line-height:1.35}
+.ev .ttl.major{font-weight:650}
+.ev .ds{font-size:12.5px; color:var(--text-secondary); margin-top:4px; line-height:1.5}
+.ev .src{font-size:11.5px; margin-top:5px}
+.ev .src a{color:var(--text-muted); text-decoration:none; border-bottom:1px solid var(--grid)}
+.ev .src a:hover{color:var(--text-secondary)}
+.conf{font-size:10.5px; font-weight:650; letter-spacing:.045em; text-transform:uppercase; padding:2px 6px; border-radius:4px; white-space:nowrap}
+.conf.C{color:var(--good); background:color-mix(in srgb, var(--good) 12%, transparent)}
+.conf.E{color:var(--warning); background:color-mix(in srgb, var(--warning) 16%, transparent)}
+.conf.S{color:var(--critical); background:color-mix(in srgb, var(--critical) 12%, transparent)}
+html[data-theme="dark"] .conf.E{color:#fab219}
+.star{color:var(--warning); font-size:12px}
+
+/* tooltip */
+#tip{
+  position:fixed; z-index:99; pointer-events:none; opacity:0; transition:opacity .1s;
+  background:var(--surface-1); border:1px solid var(--border); border-radius:9px;
+  padding:9px 12px; box-shadow:0 4px 20px rgba(0,0,0,.16); max-width:310px; font-size:12.5px;
+}
+#tip .tt{font-weight:620; margin-bottom:3px; line-height:1.35}
+#tip .tm{color:var(--text-secondary); font-size:11.5px}
+#tip .tr{display:flex; justify-content:space-between; gap:14px; font-size:11.5px; color:var(--text-secondary); font-variant-numeric:tabular-nums}
+
+/* table */
+table{width:100%; border-collapse:collapse; font-size:12.5px}
+th{text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--text-muted); font-weight:600; padding:7px 9px; border-bottom:1px solid var(--axis)}
+td{padding:7px 9px; border-bottom:1px solid var(--grid); vertical-align:top}
+td.d{font-variant-numeric:tabular-nums; white-space:nowrap; color:var(--text-secondary)}
+.hide{display:none}
+.note{font-size:12px; color:var(--text-secondary); line-height:1.55}
+.note strong{color:var(--text-primary); font-weight:620}
+.legendrow{display:flex; flex-wrap:wrap; gap:5px 14px; font-size:12px; color:var(--text-secondary); margin-top:12px}
+.legendrow i{display:inline-flex; align-items:center; gap:6px; font-style:normal}
+.legendrow i b{width:10px; height:10px; border-radius:3px; display:inline-block}
+.empty{padding:34px; text-align:center; color:var(--text-muted); font-size:13px}
+@media(max-width:660px){
+  .maprow{grid-template-columns:64px 1fr}
+  .monthgrid{margin-left:74px}
+  .flabel{width:100%}
+  .ev{grid-template-columns:56px 1fr; gap:10px}
+  .flabel{width:100%}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hdr">
+    <div>
+      <h1>Catalyst Calendar</h1>
+      <p class="sub">13 positions &middot; 17 Aug – 31 Dec 2026 &middot; prices as of the 14 Aug close &middot; built 16 Aug 2026</p>
+    </div>
+    <button class="themebtn" id="themeBtn">Dark mode</button>
+  </div>
+
+  <div class="tiles" id="tiles"></div>
+
+  <div class="card">
+    <h2>Filters</h2>
+    <p class="sub">Click to toggle. Everything below responds.</p>
+    <div style="margin-top:14px">
+      <div class="frow"><span class="flabel">Type</span><span id="catChips"></span></div>
+      <div class="frow"><span class="flabel">Ticker</span><span id="tickChips"></span></div>
+      <div class="frow"><span class="flabel">Confidence</span>
+        <span id="confChips"></span>
+        <span style="flex:1"></span>
+        <button class="mini" id="resetBtn">Reset all</button>
+        <button class="mini" id="tblBtn">Table view</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Catalyst density by week</h2>
+    <p class="sub">Where the calendar bunches up. Hover a bar for the breakdown.</p>
+    <div class="chart">
+      <div class="ylab" id="ymax"></div>
+      <div class="bars" id="bars"></div>
+      <div class="xaxis" id="xaxis"></div>
+    </div>
+    <div class="legendrow" id="legend"></div>
+  </div>
+
+  <div class="card">
+    <h2>Catalyst map</h2>
+    <p class="sub">Every position across the window. Hollow markers are estimated dates; the faint bar behind a marker is a date range. Red line is today.</p>
+    <div class="map">
+      <div class="monthgrid" id="monthgrid"></div>
+      <div id="maprows"></div>
+    </div>
+  </div>
+
+  <div class="card" id="agendaCard">
+    <h2>The calendar</h2>
+    <p class="sub" id="agendaSub"></p>
+    <div id="agenda"></div>
+  </div>
+
+  <div class="card hide" id="tableCard">
+    <h2>Table view</h2>
+    <p class="sub">Same data, sortable by eye and easy to copy.</p>
+    <div style="overflow-x:auto; margin-top:12px"><table id="tbl"></table></div>
+  </div>
+
+  <div class="card">
+    <h2>How to read this — and where it can be wrong</h2>
+    <div class="note" style="margin-top:10px">
+      <p style="margin:0 0 9px"><strong>Confirmed vs. estimated is the most important field on this page.</strong> Only a handful of earnings dates in this window are actually company-announced: NVDA 8/26, MRVL 8/27, IREN 8/27, and CRDO 9/1. Everything else marked <span class="conf E">Est</span> is derived from each company's own historical reporting pattern or a vendor consensus calendar. Most firms confirm 2–4 weeks ahead via a "sets conference call" press release — that release is itself a trackable signal, and it's when you should re-check this calendar.</p>
+      <p style="margin:0 0 9px"><strong>Two identity findings worth flagging.</strong> SPCX is not pure SpaceX — xAI was merged in pre-IPO and the Anysphere/Cursor acquisition closed 8/14 for roughly $60B in stock, so Grok model releases and ~420M newly issued shares belong in the catalyst set alongside launch milestones. And DRAM is the Roundhill Memory ETF, not an operating company: it has no earnings of its own, so its rows here are the earnings dates of its top holdings, weighted by exposure — Micron ~25.6%, Samsung ~25.6%, SK hynix ~20.9% on a swap-plus-direct basis.</p>
+      <p style="margin:0 0 9px"><strong>Three corrections to assumptions that would otherwise sit in this calendar.</strong> IREN discontinued its monthly operational updates after the August 2025 edition — there is no monthly drumbeat to trade in 2026. There is no NVIDIA GTC Washington DC 2026; GTC Berlin on 10/21 is the only NVIDIA-owned keynote before year-end. And the Russell semi-annual reconstitution moved from November to December (11 Dec close / 14 Dec open) — any calendar showing a November 2026 Russell recon is wrong.</p>
+      <p style="margin:0 0 9px"><strong>The weakest-sourced items are the SPCX lockup tranches.</strong> The 8/6 first release and the ~911.5M restricted-share pool are well corroborated. The intermediate ~7% tranches, the 28% post-Q3 tranche, and whether the final expiry is 12/8 or 12/9 come only from IPO-research aggregators — the primary 424B4 was too large to retrieve. Verify against the prospectus "Shares Eligible for Future Sale" section before trading them.</p>
+      <p style="margin:0"><strong>Options-implied expected moves are not in this build.</strong> The FlashAlpha connector on this account is on the free tier, which gates the expected-move and earnings-analytics endpoints and caps usage at five calls a day. Where it matters, company guidance going into each print is written into the event description instead — that's the fundamental analogue of the same question.</p>
+    </div>
+  </div>
+
+  <p class="sub" style="text-align:center; margin-top:24px">
+    Informational only — not investment advice. Dates change; verify anything you intend to trade against the company's own IR page.
+  </p>
+</div>
+
+<div id="tip"></div>
+
+<script>
+// Catalyst calendar data — generated 2026-08-16
+// status: C = company/official confirmed, E = estimated (pattern/consensus), S = speculative
+// tier: 1 = major mover, 2 = standard, 3 = context
+
+const POSITIONS = [
+  {t:'AMKR', name:'Amkor Technology',        price:59.02,   prev:57.75,  note:'OSAT / advanced packaging'},
+  {t:'APLD', name:'Applied Digital',         price:31.195,  prev:30.62,  note:'AI datacenter REIT-alike'},
+  {t:'AMPX', name:'Amprius Technologies',    price:12.505,  prev:11.94,  note:'Silicon-anode batteries'},
+  {t:'BE',   name:'Bloom Energy',            price:229.905, prev:236.22, note:'Fuel cells / DC power'},
+  {t:'COHR', name:'Coherent Corp',           price:325.93,  prev:327.23, note:'Optics / transceivers'},
+  {t:'CRDO', name:'Credo Technology',        price:260.07,  prev:265.99, note:'AEC / connectivity'},
+  {t:'GLW',  name:'Corning',                 price:165.98,  prev:158.54, note:'Optical fiber / glass'},
+  {t:'NVDA', name:'NVIDIA',                  price:225.17,  prev:225.30, note:'AI accelerators'},
+  {t:'SPCX', name:'SpaceX (+xAI)',           price:139.84,  prev:141.29, note:'Space + AI — IPO 6/12/26'},
+  {t:'IREN', name:'IREN Limited',            price:44.035,  prev:44.76,  note:'AI cloud / datacenters'},
+  {t:'NBIS', name:'Nebius Group',            price:277.68,  prev:255.04, note:'AI cloud infrastructure'},
+  {t:'MRVL', name:'Marvell Technology',      price:221.96,  prev:222.18, note:'Custom silicon / optics'},
+  {t:'DRAM', name:'Roundhill Memory ETF',    price:57.315,  prev:56.93,  note:'ETF — memory complex'}
+];
+
+const CATS = {
+  earnings: {label:'Earnings',            light:'#2a78d6', dark:'#3987e5'},
+  dividend: {label:'Dividend',            light:'#eb6834', dark:'#d95926'},
+  macro:    {label:'Macro',               light:'#1baf7a', dark:'#199e70'},
+  opex:     {label:'Options / OPEX',      light:'#eda100', dark:'#c98500'},
+  product:  {label:'Product & Tech',      light:'#e87ba4', dark:'#d55181'},
+  index:    {label:'Index & Rebalance',   light:'#008300', dark:'#008300'},
+  supply:   {label:'Capital & Capacity',  light:'#4a3aa7', dark:'#9085e9'},
+  conf:     {label:'Conference / Inv Day',light:'#e34948', dark:'#e66767'},
+  closed:   {label:'Market closed',       light:'#898781', dark:'#898781'}
+};
+
+const EVENTS = [
+// ─────────────── NVDA ───────────────
+{d:'2026-08-26', t:'NVDA', c:'earnings', tier:1, s:'C', title:'Q2 FY2027 earnings — AMC, 5:00pm ET call',
+ desc:'Guide: revenue $91.0B ±2%, non-GAAP GM 75.0% ±50bp. Critically, the guide assumes ZERO China data-center revenue — any recognized H200 China revenue is clean upside.',
+ src:'https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Sets-Conference-Call-for-Second-Quarter-Financial-Results/default.aspx'},
+{d:'2026-08-26', t:'NVDA', c:'dividend', tier:3, s:'E', title:'Q2 FY27 dividend declaration expected ($0.25)',
+ desc:'Dividend was raised 25x from $0.01 to $0.25/qtr on 2026-05-20, alongside an added $80B buyback authorization.',
+ src:'https://stockanalysis.com/stocks/nvda/dividend/'},
+{d:'2026-09-10', t:'NVDA', c:'dividend', tier:3, s:'E', title:'Ex-dividend date ($0.25)',
+ desc:'Forecast ex-date; pay date ~2026-10-01. Not yet declared.', src:'https://www.dividendmax.com/united-states/nasdaq/technology-hardware-and-equipment/nvidia-corp/dividends'},
+{d:'2026-10-01', t:'NVDA', c:'dividend', tier:3, s:'E', title:'Dividend pay date ($0.25)', desc:'Forecast payment date for the Q2 FY27 quarterly dividend.', src:'https://stockanalysis.com/stocks/nvda/dividend/'},
+{d:'2026-10-01', d2:'2026-12-31', t:'NVDA', c:'product', tier:1, s:'C', title:'Vera Rubin volume ramp (Q4 CY2026)',
+ desc:'Blackwell Ultra is still the shipping revenue generation. Initial Rubin units began Q3 CY26; Huang guided volume ramp to Q4. All three HBM4 suppliers qualified June 2026; NVDA holds >50% of TSMC CoWoS through 2027 — supply de-risked, execution dated only at quarter level.',
+ src:'https://nvidianews.nvidia.com/news/vera-rubin-full-production-agentic-ai-factory'},
+{d:'2026-10-21', t:'NVDA', c:'conf', tier:1, s:'C', title:'GTC Berlin — Jensen Huang keynote',
+ desc:'Workshops Oct 20, conference Oct 21–22 at STATION-Berlin; keynote 11:00–13:00 CEST at Tempodrom. This is the ONLY NVIDIA-owned keynote before year-end — verified that no GTC Washington DC 2026 exists.',
+ src:'https://www.nvidia.com/en-eu/gtc/'},
+{d:'2026-11-18', t:'NVDA', c:'earnings', tier:1, s:'E', title:'Q3 FY2027 earnings — AMC (expected)',
+ desc:'Inferred from historical pattern; NVIDIA typically confirms ~4 weeks prior (late Oct). Q3 FY27 quarter ends ~2026-10-25.',
+ src:'https://www.wallstreethorizon.com/nvidia-earnings-calendar'},
+{d:'2026-11-30', t:'NVDA', c:'macro', tier:2, s:'E', title:'China rare-earth export-control suspension expires',
+ desc:'Expiry of China\'s suspension is an inflection point for the US–China tech truce underpinning the H200 China license framework. Exact date within November not published.',
+ src:'https://introl.com/blog/bis-h200-china-export-policy-ai-overwatch-act-2026'},
+{d:'2026-12-31', t:'NVDA', c:'product', tier:2, s:'E', title:'Rubin CPX launch target (end of 2026)',
+ desc:'128GB GDDR7 massive-context-inference GPU targeted for end-2026 availability. Some supply-chain reports question whether memory/substrate orders support the timeline.',
+ src:'https://nvidianews.nvidia.com/news/nvidia-unveils-rubin-cpx-a-new-class-of-gpu-designed-for-massive-context-inference'},
+
+// ─────────────── MRVL ───────────────
+{d:'2026-08-27', t:'MRVL', c:'earnings', tier:1, s:'C', title:'Q2 FY2027 earnings — AMC, 4:45pm ET call',
+ desc:'Quarter ended 2026-08-01. Guide: revenue $2.7B ±5% (~+35% y/y), non-GAAP GM 58.25–59.25%, non-GAAP EPS $0.93 ±$0.05.',
+ src:'https://investor.marvell.com/news-events/press-releases'},
+{d:'2026-09-25', t:'MRVL', c:'dividend', tier:3, s:'E', title:'Q3 FY27 dividend declaration ($0.06)', desc:'Prior declaration was 2026-06-25.', src:'https://investor.marvell.com/news-events/press-releases'},
+{d:'2026-10-06', t:'MRVL', c:'conf', tier:1, s:'C', title:'Marvell Investor Day 2026 — New York City',
+ desc:'Morning session, in-person by invitation, live webcast. Expect an updated custom-silicon / AI TAM and long-term financial model — the first investor day with Celestial AI and XConn inside the portfolio, and the largest scheduled catalyst of the year for MRVL.',
+ src:'https://investor.marvell.com/news-events/ir-calendar'},
+{d:'2026-10-09', t:'MRVL', c:'dividend', tier:3, s:'E', title:'Ex-dividend date ($0.06)', desc:'Pattern-derived from Jan 9 / Apr 10 / Jul 10 2026 ex-dates.', src:'https://dividendhistory.net/mrvl-dividend-yield'},
+{d:'2026-10-29', t:'MRVL', c:'dividend', tier:3, s:'E', title:'Dividend pay date ($0.06)', desc:'Based on 2025 pattern (paid 2025-10-30).', src:'https://dividendhistory.net/mrvl-dividend-yield'},
+{d:'2026-12-02', t:'MRVL', c:'earnings', tier:1, s:'E', title:'Q3 FY2027 earnings — AMC (expected)',
+ desc:'Historical comps 2025-12-02 and 2024-12-03, both Tuesdays. Last earnings event of calendar 2026. New CFO\'s first full guidance cycle.',
+ src:'https://www.investing.com/equities/marvell-technology-group-ltd-earnings'},
+
+// ─────────────── COHR ───────────────
+{d:'2026-09-21', t:'COHR', c:'product', tier:1, s:'C', title:'PhotonLink launch at ECOC 2026, Málaga',
+ desc:'Company-stated launch date on the FY26 Q4 call. ECOC runs Sep 20–24. First PhotonLink revenue guided to the December-2026 quarter.',
+ src:'https://futurumgroup.com/insights/coherent-q4-fy-2026-earnings-1-6t-transceivers-ramp-cpo-revenue-approaches/'},
+{d:'2026-09-30', t:'COHR', c:'supply', tier:2, s:'C', title:'Indium phosphide 6-inch output doubling completes',
+ desc:'Management said InP output doubles by end of the September quarter — one quarter ahead of the original plan. Confirmation expected on the FQ1 call.',
+ src:'https://futurumgroup.com/insights/coherent-q4-fy-2026-earnings-1-6t-transceivers-ramp-cpo-revenue-approaches/'},
+{d:'2026-11-11', t:'COHR', c:'earnings', tier:1, s:'E', title:'FQ1 FY2027 earnings — AMC (expected, range Nov 4–11)',
+ desc:'Guide: revenue $2.2–2.4B, non-GAAP GM 39.5–41.5%, non-GAAP EPS $1.85–2.05. Management said 1.6T customer adoption is running ahead of the guide given three months earlier. Target: first >$3B revenue quarter by end of FY27.',
+ src:'https://www.tipranks.com/stocks/cohr/earnings'},
+{d:'2026-12-01', d2:'2026-12-31', t:'COHR', c:'product', tier:1, s:'C', title:'First co-packaged optics (CPO) revenue — Dec quarter',
+ desc:'Management guided initial CPO revenue to begin in FQ2 FY27, with scale-up ramping H2 CY2027. Cited TAM >$15B. Ultra-high-power CW laser revenue ramp starts the same quarter.',
+ src:'https://futurumgroup.com/insights/coherent-q4-fy-2026-earnings-1-6t-transceivers-ramp-cpo-revenue-approaches/'},
+
+// ─────────────── GLW ───────────────
+{d:'2026-08-31', t:'GLW', c:'dividend', tier:2, s:'C', title:'Ex-dividend / record date ($0.28)',
+ desc:'Declared 2026-06-22. Record date 2026-08-31; ex-date same day under T+1. Nearest dated event in the book.',
+ src:'https://www.businesswire.com/news/home/20260622832686/en/Corning-Announces-Quarterly-Dividend'},
+{d:'2026-09-29', t:'GLW', c:'dividend', tier:3, s:'C', title:'Dividend pay date ($0.28)', desc:'Payable 2026-09-29.', src:'https://www.businesswire.com/news/home/20260622832686/en/Corning-Announces-Quarterly-Dividend'},
+{d:'2026-10-09', t:'GLW', c:'dividend', tier:3, s:'E', title:'Q4 dividend declaration — possible first raise',
+ desc:'Board declaration for the December payment. $0.28 has been held flat through 2025 and all of 2026 to date, so a raise here would be the first in that span.',
+ src:'https://stockanalysis.com/stocks/glw/dividend/'},
+{d:'2026-11-03', t:'GLW', c:'earnings', tier:1, s:'E', title:'Q3 2026 earnings — BMO (expected, range Oct 27–Nov 3)',
+ desc:'Guide: sales $4.9–5.0B (~+16% y/y), core EPS $0.85–0.89 (~+28% y/y). The stock fell 12–18% off the July 28 print despite a beat, so this is a two-sided re-rating event.',
+ src:'https://marketchameleon.com/Overview/GLW/Earnings/Earnings-Dates/'},
+{d:'2026-11-13', t:'GLW', c:'dividend', tier:3, s:'E', title:'Q4 ex-dividend / record date', desc:'Based on 2025 pattern (ex 2025-11-14).', src:'https://stockanalysis.com/stocks/glw/dividend/'},
+{d:'2026-12-11', t:'GLW', c:'dividend', tier:3, s:'E', title:'Q4 dividend pay date', desc:'Based on 2025 pattern (paid 2025-12-12).', src:'https://stockanalysis.com/stocks/glw/dividend/'},
+{d:'2026-12-31', t:'GLW', c:'supply', tier:2, s:'C', title:'Springboard milestone — $20B annualized sales run rate',
+ desc:'Hard, company-set, dated target reaffirmed at the May-2026 investor event and the Q2 call. Q4 exit run rate is the measuring stick; progress commentary at the Q3 print, verification at the Q4 print in late Jan 2027.',
+ src:'https://investor.corning.com/news-and-events/news/news-details/2026/Corning-Upgrades-and-Extends-Springboard-Plan-Outlines-New-Phase-of-Accelerating-Growth/default.aspx'},
+
+// ─────────────── AMKR ───────────────
+{d:'2026-09-02', t:'AMKR', c:'dividend', tier:3, s:'C', title:'Ex-dividend / record date ($0.08352)', desc:'Declared 2026-08-12. Ex-date and record date both 2026-09-02.', src:'https://ir.amkor.com/stock-information/dividends-splits'},
+{d:'2026-09-22', t:'AMKR', c:'dividend', tier:3, s:'C', title:'Dividend pay date ($0.08352)', desc:'Paid 2026-09-22. ~0.3% yield — immaterial in size.', src:'https://www.businesswire.com/news/home/20260812257497/en/Amkor-Technology-Declares-Quarterly-Dividend'},
+{d:'2026-11-02', t:'AMKR', c:'earnings', tier:1, s:'E', title:'Q3 2026 earnings — AMC (expected, range Oct 26–Nov 2)',
+ desc:'Guide: net sales $1.95–2.05B, GM 18.5–19.5%, EPS $0.72–0.82; FY26 capex $2.5–3.0B. Measured against the May-2026 Investor Day 2030 model of $11B+ revenue / 22%+ GM / $5.00+ EPS. Anchor deals: TSMC 10-year Arizona agreement (June) and NVIDIA $1.5B partnership (July).',
+ src:'https://www.tipranks.com/stocks/amkr/earnings'},
+{d:'2026-11-12', t:'AMKR', c:'dividend', tier:3, s:'E', title:'Q4 dividend declaration — historical raise spot',
+ desc:'Amkor has historically raised the dividend at the November declaration (2025-11-12: $0.08269 → $0.08352).', src:'https://ir.amkor.com/stock-information/dividends-splits'},
+{d:'2026-12-02', t:'AMKR', c:'dividend', tier:3, s:'E', title:'Q4 ex-dividend / record date', desc:'Based on 2025 pattern (ex/record 2025-12-03).', src:'https://ir.amkor.com/stock-information/dividends-splits'},
+{d:'2026-12-22', t:'AMKR', c:'dividend', tier:3, s:'E', title:'Q4 dividend pay date', desc:'Based on 2025 pattern (paid 2025-12-23).', src:'https://ir.amkor.com/stock-information/dividends-splits'},
+
+// ─────────────── CRDO ───────────────
+{d:'2026-09-01', t:'CRDO', c:'earnings', tier:1, s:'C', title:'Q1 FY2027 earnings — AMC, 2:00pm PT call',
+ desc:'Quarter ended 2026-08-01. Guide: revenue $465–475M, non-GAAP GM 67.0–69.0%, opex $86–90M. Consensus non-GAAP EPS ~$1.17 vs $0.52 a year ago. Note the prior quarter MISSED on EPS ($1.025 vs $1.16 est) despite +157% y/y revenue — the bar is raised.',
+ src:'https://www.stocktitan.net/news/CRDO/'},
+{d:'2026-10-12', d2:'2026-10-15', t:'CRDO', c:'conf', tier:2, s:'C', title:'OCP Global Summit — OmniConnect contribution',
+ desc:'Credo announced 2026-08-10 it will contribute its OmniConnect scale-in interconnect to the Open Compute Project, targeting the AI-inference memory wall and "reduced dependence on costly, capacity-constrained HBM." The Summit is the natural venue for the standardization reveal.',
+ src:'https://www.opencompute.org/summit/global-summit'},
+{d:'2026-12-01', t:'CRDO', c:'earnings', tier:1, s:'E', title:'Q2 FY2027 earnings (expected)',
+ desc:'Q2 FY26 was reported 2026-12-01. Second and final CRDO print in the window. Net cash, no convertible debt, only ~3.6% short float — the risk here is a guidance/margin miss, not a positioning unwind.',
+ src:'https://www.tipranks.com/stocks/crdo/earnings'},
+{d:'2026-12-11', t:'CRDO', c:'index', tier:2, s:'E', title:'Nasdaq-100 annual reconstitution — CRDO a credible add',
+ desc:'~$48B market cap, GAAP-profitable, Nasdaq-listed — a strong candidate on the Nov-30 ranking date. S&P 500 is structurally unavailable (Cayman incorporation fails the US-domicile test).',
+ src:'https://indexes.nasdaq.com/docs/Methodology_NDX.pdf'},
+
+// ─────────────── IREN ───────────────
+{d:'2026-08-27', t:'IREN', c:'earnings', tier:1, s:'C', title:'FY26 full-year results — AMC, 5:00pm ET',
+ desc:'FYE 2026-06-30. Expect FY27 capacity/ARR framing, the Horizon 2–4 schedule, a Sweetwater update, and financing plans. Against ~32% short float and 2.1 days to cover.',
+ src:'https://www.stocktitan.net/news/IREN/iren-to-release-fy26-results-on-august-27-xhdi5w91ly9f.html'},
+{d:'2026-09-01', d2:'2026-12-31', t:'IREN', c:'supply', tier:1, s:'C', title:'Horizon 2, 3 and 4 delivery to Microsoft (3 × 50MW)',
+ desc:'Horizon 1 (50MW IT load) delivered and accepted 2026-08-13. Three further 50MW deployments guided for delivery "later this year" under the $9.7B / 5-year Microsoft contract at Childress TX. Each acceptance is a discrete revenue-recognition catalyst and a squeeze trigger. Individual dates NOT specified.',
+ src:'https://www.globenewswire.com/news-release/2026/08/13/3344413/0/en/iren-delivers-horizon-1-to-microsoft-and-achieves-nvidia-exemplar-cloud-status-on-gb300-nvl72.html'},
+{d:'2026-11-05', t:'IREN', c:'earnings', tier:1, s:'E', title:'Q1 FY2027 earnings (expected)',
+ desc:'Q1 FY26 was reported 2026-11-06. Scheduling PR historically lands ~2 weeks prior. Progress against the >$4bn exit-ARR target is the key metric.',
+ src:'https://iren.gcs-web.com/news-releases/news-release-details/iren-reports-q1-fy26-results'},
+{d:'2026-12-31', t:'IREN', c:'supply', tier:1, s:'C', title:'Year-end targets: 480MW gross capacity + >$4bn ARR',
+ desc:'ARR target raised 2026-07-20 from $3.7bn alongside $2.8bn of new AI-developer contracts. Capacity ramps to 1.2GW gross in 2027. Note: monthly operational updates were DISCONTINUED after the August 2025 edition — do not model a monthly drumbeat.',
+ src:'https://iren.com/investors/news'},
+
+// ─────────────── NBIS ───────────────
+{d:'2026-11-12', t:'NBIS', c:'earnings', tier:1, s:'E', title:'Q3 2026 earnings — BMO (expected, range Nov 10–18)',
+ desc:'Also the highest-probability venue for the promised first formal FY2027 guidance, which management explicitly deferred to "later in 2026." The Q4 print falls in Feb 2027, so this is the dominant information event of the window.',
+ src:'https://www.investing.com/equities/yandex-nv-earnings'},
+{d:'2026-10-01', d2:'2026-12-31', t:'NBIS', c:'supply', tier:1, s:'C', title:'Premium short-term capacity deal goes live — Q4',
+ desc:'Signed Q3 2026 at $40–50M per MW annualized vs $20–25M/MW on standard landmark deals. Go-live guided to Q4 2026 — a direct revenue/ARR step-up.',
+ src:'https://mms.businesswire.com/media/20260812963359/en/2874372/1/SHLQ226.pdf'},
+{d:'2026-12-31', t:'NBIS', c:'supply', tier:1, s:'C', title:'FY26 year-end checkpoints: $7–9B exit ARR, 800MW–1GW connected',
+ desc:'All FY26 guidance reaffirmed at Q2: revenue $3.0–3.4B, exit ARR $7–9B (vs $3.0B at Q2), ~40% adj EBITDA margin, contracted power raised to 5GW, capex $20–25B. Offsetting overhangs: 12.3M shares of ATM authorization remaining, plus a repeatable ABS program against >$40B of customer commitments.',
+ src:'https://mms.businesswire.com/media/20260812963359/en/2874372/1/SHLQ226.pdf'},
+
+// ─────────────── APLD ───────────────
+{d:'2026-10-08', t:'APLD', c:'earnings', tier:1, s:'E', title:'FQ1 FY2027 earnings — AMC (expected)',
+ desc:'Quarter ending 2026-08-31; first "pure-play datacenter" quarter post-ChronoScale separation. FQ1 FY26 was 2025-10-09. Confirming PR historically drops ~12 days prior. The ONLY scheduled catalyst for APLD in the window.',
+ src:'https://marketchameleon.com/Overview/APLD/Earnings/Earnings-Dates/'},
+{d:'2026-08-17', d2:'2026-12-31', t:'APLD', c:'supply', tier:1, s:'E', title:'Next hyperscaler AI-factory lease — unscheduled',
+ desc:'Highest-impact recurring catalyst. 2026 cadence ran ~1 major lease per 4–6 weeks (Polaris Forge 3 $7.5B on 5/20; Delta Forge 2 210MW on 6/8), but nothing since 2026-06-08 — a ~10-week gap. 1.4GW contracted / ~$36B contracted lease revenue. ~25% of shares out are short.',
+ src:'https://ir.applieddigital.com/news-events/press-releases'},
+{d:'2026-08-17', d2:'2026-12-31', t:'APLD', c:'supply', tier:2, s:'E', title:'Further capital raises near-certain — unscheduled',
+ desc:'$5.0B total debt vs $4.2B cash with 1.4GW to build. Revolver upsized to $430M committed + $120M accordion; preferred-stock capacity expanded to $2.0B. 2026 precedent: $2.15B and $1.59B senior secured notes. Note nothing new energizes until CY2027 beyond Polaris Forge 1.',
+ src:'https://www.tradingview.com/news/tradingview:cedd7ebfcf212:0-applied-digital-boosts-liquidity-with-430-million-revolver-2-0-billion-preferred-facility/'},
+
+// ─────────────── BE ───────────────
+{d:'2026-08-27', t:'BE', c:'conf', tier:3, s:'C', title:'Company webinar — "Powering AI at Scale: What Comes Next"', desc:'Bloom-hosted virtual event. Typically thought-leadership, but a venue for demand commentary.', src:'https://www.bloomenergy.com/events/'},
+{d:'2026-09-18', t:'BE', c:'index', tier:2, s:'S', title:'S&P September rebalance — potential S&P 500 addition',
+ desc:'BE is widely speculated as an S&P 500 candidate (~$55B cap, now GAAP-profitable). Changes are announced ~1 week before the effective date and can also occur ad hoc. The stock has already spiked and retraced on inclusion speculation once in 2026. SPECULATIVE — not announced.',
+ src:'https://finance.yahoo.com/markets/stocks/articles/bloom-energy-p-500-buzz-200938721.html'},
+{d:'2026-09-28', d2:'2026-09-30', t:'BE', c:'conf', tier:3, s:'C', title:'Yotta 2026, Las Vegas', desc:'Datacenter industry conference.', src:'https://www.bloomenergy.com/events/'},
+{d:'2026-10-13', t:'BE', c:'conf', tier:3, s:'C', title:'TechCrunch Disrupt, San Francisco — Bloom panelist', desc:'Speaking slot 10/13.', src:'https://www.bloomenergy.com/events/'},
+{d:'2026-10-27', t:'BE', c:'earnings', tier:1, s:'E', title:'Q3 2026 earnings — AMC (expected)',
+ desc:'Q2 2026 was the first billion-dollar quarter: $1.065B revenue (+165.5% y/y), non-GAAP EPS $0.78. FY26 guide raised to $3.9–4.2B revenue, ~34% non-GAAP GM, $2.55–2.85 EPS. Backlog disclosure quality is a two-sided catalyst given the short-seller backlog dispute.',
+ src:'https://investor.bloomenergy.com/events-and-presentations/events-calendar'},
+{d:'2026-12-18', t:'BE', c:'index', tier:2, s:'S', title:'S&P December rebalance — second S&P 500 window',
+ desc:'Same mechanics as September; announcement would come around the second week of December. SPECULATIVE.',
+ src:'https://simplywall.st/stocks/us/capital-goods/nyse-be/bloom-energy/news/bloom-energy-weighs-sp-500-prospects-as-ai-power-demand-buil'},
+{d:'2026-12-31', t:'BE', c:'supply', tier:2, s:'E', title:'2 GW annual production capacity target',
+ desc:'CEO KR Sridhar targeted 2GW annual manufacturing capacity by December 2026, roughly double 2025. Management reiterated at Q2 that capacity and supply chain are "not bottlenecks."',
+ src:'https://www.utilitydive.com/news/bloom-energy-says-its-on-track-for-2-gw-annual-production-capacity/804291/'},
+
+// ─────────────── AMPX ───────────────
+{d:'2026-09-14', d2:'2026-09-16', t:'AMPX', c:'conf', tier:3, s:'C', title:'H.C. Wainwright 28th Annual Global Investment Conference, NYC', desc:'CFO Ricardo Rodriguez holding one-on-one investor meetings; no formal webcast presentation announced.', src:'https://www.businesswire.com/news/home/20260730129767/en/Amprius-Technologies-Sets-Upcoming-Conference-Schedule'},
+{d:'2026-09-29', t:'AMPX', c:'conf', tier:3, s:'C', title:'Evercore 9th ADAS, AV & AI Forum, NYC', desc:'CFO holding one-on-one investor meetings.', src:'https://www.businesswire.com/news/home/20260730129767/en/Amprius-Technologies-Sets-Upcoming-Conference-Schedule'},
+{d:'2026-09-01', d2:'2026-12-25', t:'AMPX', c:'product', tier:1, s:'E', title:'New SiCore/SiMaxx cell announcements "between now and Christmas"',
+ desc:'CEO Tom Stepien and the CFO said at the Canaccord Genuity conference (2026-08-11) to expect new cell announcements before Christmas, with improvements in energy density, power and cycle life. Management-guided, no fixed date.',
+ src:'https://www.investing.com/news/transcripts/amprius-at-canaccord-genuity-conference-growth-built-on-silicon-edge-93CH-4852030'},
+{d:'2026-11-05', t:'AMPX', c:'earnings', tier:1, s:'E', title:'Q3 2026 earnings — AMC (expected)',
+ desc:'Q2 revenue was $34.0M (+126% y/y) at 27% GM. FY26 guidance raised 2026-08-04 to ≥$140M revenue, ≥28% GM, ≥$4.0M adjusted EBITDA. Watch the balance sheet — cash fell to $74.5M at 6/30 from $90.5M at YE25, making an equity raise the most plausible unscheduled negative.',
+ src:'https://ir.amprius.com/financial-information/financial-results'},
+{d:'2026-08-17', d2:'2026-12-31', t:'AMPX', c:'supply', tier:2, s:'E', title:'Additional defense/drone orders — unscheduled',
+ desc:'Recent precedent: a $24M SiCore cylindrical-cell order from a European drone developer and SiCore supply into Redwire\'s Stalker Block 30 (both disclosed 2026-08-04). Prior customers include AeroVironment, L3Harris, Teledyne FLIR. Also watch the DIU-funded Fremont pilot-line completion (~40% of tools installed at Q2).',
+ src:'https://www.businesswire.com/news/home/20260804904743/en/Amprius-Technologies-Reports-Second-Quarter-2026-Financial-Results-and-Recent-Business-Highlights'},
+
+// ─────────────── SPCX ───────────────
+{d:'2026-08-21', t:'SPCX', c:'supply', tier:2, s:'E', title:'Lockup tranche ~7% (day 70)',
+ desc:'First of five ~7% time-based tranches at 70/90/105/120/135 days post-listing. MEDIUM confidence — sourced from IPO-research aggregators, not the 424B4.',
+ src:'https://spcx.capital/spacex-stock-lockup-dates'},
+{d:'2026-08-25', d2:'2026-09-10', t:'SPCX', c:'product', tier:1, s:'E', title:'Starship Flight 14 — with attempted ship catch',
+ desc:'Musk indicated on the 2026-08-04 call an intent to fly in August; Morgan Stanley pegs it to early September and calls it the largest single volatility event of the year, determining whether Starship reaches full operational status by year-end. Launch dates slip routinely.',
+ src:'https://www.investing.com/news/stock-market-news/morgan-stanley-flags-four-catalysts-for-spacex-stock-through-yearend-4861777'},
+{d:'2026-09-10', t:'SPCX', c:'supply', tier:3, s:'E', title:'Lockup tranche ~7% (day 90)', desc:'MEDIUM confidence.', src:'https://spcx.capital/spacex-stock-lockup-dates'},
+{d:'2026-09-25', t:'SPCX', c:'supply', tier:3, s:'E', title:'Lockup tranche ~7% (day 105)', desc:'MEDIUM confidence.', src:'https://spcx.capital/spacex-stock-lockup-dates'},
+{d:'2026-09-30', t:'SPCX', c:'product', tier:2, s:'E', title:'Grok 4.7 release',
+ desc:'Morgan Stanley flagged Grok 4.6/4.7 as near-term catalysts, stressing that usage metrics matter more than benchmark scores. Note SPCX merged with xAI pre-IPO and closed the Anysphere/Cursor acquisition 2026-08-14 (~$60B in stock), so AI model releases sit alongside launch milestones.',
+ src:'https://www.investing.com/news/stock-market-news/morgan-stanley-flags-four-catalysts-for-spacex-stock-through-yearend-4861777'},
+{d:'2026-10-10', t:'SPCX', c:'supply', tier:3, s:'E', title:'Lockup tranche ~7% (day 120)', desc:'MEDIUM confidence.', src:'https://spcx.capital/spacex-stock-lockup-dates'},
+{d:'2026-10-25', t:'SPCX', c:'supply', tier:2, s:'E', title:'Lockup tranche ~7% (day 135) — last time-based tranche',
+ desc:'By roughly this point the public float is estimated to reach ~one third of shares outstanding.',
+ src:'https://www.investing.com/analysis/spacex-lockup-countdown-when-shares-may-become-safer-to-buy-200682574'},
+{d:'2026-11-17', t:'SPCX', c:'earnings', tier:1, s:'E', title:'Q3 2026 earnings — AMC (expected), second-ever public print',
+ desc:'Not company-announced. First print (2026-08-04) beat at -$0.09 vs -$0.16 est. Consensus now models a swing to positive EPS (~+$0.14).',
+ src:'https://finance.yahoo.com/markets/stocks/articles/spacex-q2-2026-earnings-date-170755440.html'},
+{d:'2026-11-19', d2:'2026-11-24', t:'SPCX', c:'supply', tier:1, s:'E', title:'Q3-earnings-linked lockup tranche — up to 28%',
+ desc:'The largest remaining supply event before the final expiry. Tied to the Q3 release date (typically two trading days after), so it moves with that date.',
+ src:'https://spcx.capital/spacex-stock-lockup-dates'},
+{d:'2026-12-08', t:'SPCX', c:'supply', tier:1, s:'E', title:'FULL 180-day lockup expiration',
+ desc:'The headline lockup date — sources put 60%+ of pre-IPO shares becoming unrestricted here (some cite 12-09). Musk and certain large institutional holders are on a longer 366-day lockup expiring ~2027-06-13 and are NOT released in 2026. Verify against the 424B4 "Shares Eligible for Future Sale" section before trading it.',
+ src:'https://www.investing.com/analysis/spacex-lockup-countdown-when-shares-may-become-safer-to-buy-200682574'},
+{d:'2026-11-01', d2:'2026-12-31', t:'SPCX', c:'product', tier:2, s:'E', title:'Grok 5 release "before year-end"', desc:'Flagged by Morgan Stanley among four catalysts through year-end.', src:'https://www.investing.com/news/stock-market-news/morgan-stanley-flags-four-catalysts-for-spacex-stock-through-yearend-4861777'},
+
+// ─────────────── DRAM (ETF — holding catalysts) ───────────────
+{d:'2026-09-08', t:'DRAM', c:'supply', tier:3, s:'C', title:'T-bill collateral maturity (24.8% of fund)',
+ desc:'The largest single line item (US T-Bill 09/08/2026) matures and rolls. Mechanical, not a price catalyst, but it confirms the swap-collateral structure — gross exposure sums to ~125% of NAV.',
+ src:'https://stockanalysis.com/etf/dram/holdings/'},
+{d:'2026-09-22', t:'DRAM', c:'earnings', tier:1, s:'E', title:'MICRON fiscal Q4 2026 — AMC (~25.6% exposure)',
+ desc:'DOMINANT CATALYST. Aug-ending fiscal Q4 plus full-year FY26. Consensus EPS ~$31.27, up from $25.11 in FQ3 — the HBM/DRAM up-cycle is extreme. Expect Micron to announce the date in late August.',
+ src:'https://investors.micron.com/events-and-presentations'},
+{d:'2026-09-30', t:'DRAM', c:'index', tier:3, s:'E', title:'Q3 quarterly portfolio rebalance',
+ desc:'Actively managed with no published index calendar — rebalancing is "generally limited to quarterly" at the adviser\'s discretion and is not pre-announced. Watch the daily holdings file for swap notional and weight resets.',
+ src:'https://www.roundhillinvestments.com/etf/dram/'},
+{d:'2026-10-08', t:'DRAM', c:'earnings', tier:2, s:'E', title:'SAMSUNG Q3 preliminary earnings guidance (~25.6% exposure)',
+ desc:'Samsung publishes a preliminary revenue/operating-profit release in the first ~8 business days after quarter end. Typically the first hard read on the quarter\'s memory pricing.',
+ src:'https://news.samsung.com/global/tag/earnings-guidance'},
+{d:'2026-10-27', t:'DRAM', c:'earnings', tier:3, s:'E', title:'SEAGATE fiscal Q1 2027 — AMC (5.2% exposure)', desc:'Consensus EPS ~$7.30 vs $5.71 prior quarter — HDD riding the same AI-storage squeeze.', src:'https://stockanalysis.com/etf/dram/holdings/'},
+{d:'2026-10-28', t:'DRAM', c:'earnings', tier:1, s:'E', title:'SK HYNIX Q3 2026 (~20.9% exposure)',
+ desc:'The single most important HBM datapoint after Micron. Anchor: Q2 2026 announced 2026-07-29. Call at 9:00am Seoul; invitation issued ~1 week prior.',
+ src:'https://news.skhynix.com/en/q2-2026-earnings-conference-call-invitation/'},
+{d:'2026-10-29', t:'DRAM', c:'earnings', tier:2, s:'E', title:'SAMSUNG full Q3 results + WESTERN DIGITAL FQ1 27',
+ desc:'Samsung full results with DS/memory segment detail typically land in the last week of October. WDC (4.2% exposure) consensus EPS ~$4.03.',
+ src:'https://www.samsung.com/global/ir/financial-information/earnings-release/'},
+{d:'2026-11-05', t:'DRAM', c:'earnings', tier:3, s:'E', title:'SANDISK fiscal Q1 2027 — AMC (4.5% exposure)',
+ desc:'Consensus EPS ~$45.86 vs $39.25 prior — the most extreme NAND-cycle beneficiary in the basket.', src:'https://stockanalysis.com/etf/dram/holdings/'},
+{d:'2026-12-15', t:'DRAM', c:'dividend', tier:3, s:'E', title:'First-ever annual distribution expected',
+ desc:'DRAM distributes annually and has paid nothing since its 2026-04-02 inception, so the first should fall in December. Roundhill\'s distribution calendar is currently empty. Expect a modest amount. Verify on the fund page in early December.',
+ src:'https://www.roundhillinvestments.com/etf/dram/'},
+{d:'2026-12-16', t:'DRAM', c:'earnings', tier:1, s:'E', title:'MICRON fiscal Q1 2027 — AMC (~25.6% exposure)',
+ desc:'DOMINANT CATALYST #2. Nov-ending fiscal Q1 FY27; consensus EPS ~$34.75. The last major memory-cycle datapoint of the calendar year — it sets the 2027 tone.',
+ src:'https://investors.micron.com/quarterly-results'},
+
+// ─────────────── MARKET-WIDE ───────────────
+{d:'2026-08-26', t:'MKT', c:'macro', tier:2, s:'C', title:'Q2 GDP second estimate + July PCE — 8:30am ET',
+ desc:'BEA second estimate of Q2 2026 real GDP with the first look at corporate profits, plus headline and core PCE for July.', src:'https://www.bea.gov/news/schedule'},
+{d:'2026-08-27', d2:'2026-08-29', t:'MKT', c:'conf', tier:2, s:'C', title:'Jackson Hole Economic Policy Symposium',
+ desc:'Kansas City Fed symposium, Aug 27–29. Theme: "Financial Innovation: Implications for Payments and Policy." Chair speech historically Friday morning (Aug 28).',
+ src:'https://www.kansascityfed.org/research/jackson-hole-economic-symposium/'},
+{d:'2026-09-04', t:'MKT', c:'macro', tier:2, s:'C', title:'August jobs report (nonfarm payrolls) — 8:30am ET', desc:'BLS Employment Situation for reference month August 2026.', src:'https://www.bls.gov/schedule/news_release/empsit.htm'},
+{d:'2026-09-07', t:'MKT', c:'closed', tier:3, s:'C', title:'Labor Day — markets closed', desc:'NYSE, Nasdaq and SIFMA bond markets closed.', src:'https://www.nyse.com/markets/hours-calendars'},
+{d:'2026-09-11', t:'MKT', c:'macro', tier:2, s:'C', title:'August CPI — 8:30am ET', desc:'Last CPI print before the Sept 15–16 FOMC. PPI lands the day before (Sept 10).', src:'https://www.bls.gov/schedule/news_release/cpi.htm'},
+{d:'2026-09-16', t:'MKT', c:'macro', tier:1, s:'C', title:'FOMC decision + SEP + press conference',
+ desc:'Two-day meeting Sept 15–16; statement 14:00 ET, dot plot included, Chair presser 14:30 ET. Retail sales the same morning.', src:'https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm'},
+{d:'2026-09-18', t:'MKT', c:'opex', tier:1, s:'C', title:'September quad witching — quarterly OPEX',
+ desc:'Third Friday. Quarterly expiration of index futures, index options, stock options and single-stock futures. Coincides with FTSE GEIS rebalance trades at the close.',
+ src:'https://cdn.cboe.com/resources/options/Cboe2026OPTIONSCalendar.pdf'},
+{d:'2026-09-21', t:'MKT', c:'index', tier:2, s:'E', title:'S&P + Nasdaq-100 September rebalance effective',
+ desc:'Changes take effect before the open Monday Sept 21 (first trading day after the third Friday). Announcement expected ~Sept 4 (S&P) and ~Sept 11 (NDX).', src:'https://www.spglobal.com/spdji/'},
+{d:'2026-09-30', t:'MKT', c:'macro', tier:2, s:'C', title:'Q2 GDP third estimate + August PCE — 8:30am ET', desc:'BEA final Q2 2026 GDP estimate and August PCE price index.', src:'https://www.bea.gov/news/schedule'},
+{d:'2026-10-02', t:'MKT', c:'macro', tier:2, s:'C', title:'September jobs report — 8:30am ET', desc:'BLS Employment Situation for reference month September 2026.', src:'https://www.bls.gov/schedule/news_release/empsit.htm'},
+{d:'2026-10-12', d2:'2026-10-15', t:'MKT', c:'conf', tier:2, s:'C', title:'OCP Global Summit, San Jose',
+ desc:'Open Compute Project flagship — the key AI-datacenter/rack-scale hardware venue. Directly relevant to CRDO, MRVL, COHR, NVDA and the optics complex.', src:'https://www.opencompute.org/summit/global-summit'},
+{d:'2026-10-14', t:'MKT', c:'macro', tier:2, s:'C', title:'September CPI — 8:30am ET', desc:'BLS CPI for reference month September 2026.', src:'https://www.bls.gov/schedule/news_release/cpi.htm'},
+{d:'2026-10-16', t:'MKT', c:'opex', tier:2, s:'C', title:'October monthly OPEX', desc:'Third Friday. Standard monthly equity/index/ETF option expiration — not a quarterly witching.', src:'https://cdn.cboe.com/resources/options/Cboe2026OPTIONSCalendar.pdf'},
+{d:'2026-10-28', t:'MKT', c:'macro', tier:1, s:'C', title:'FOMC decision — no SEP',
+ desc:'Two-day meeting Oct 27–28; statement 14:00 ET, Chair presser 14:30 ET. No Summary of Economic Projections. Advance Q3 GDP and September PCE land the very next morning.',
+ src:'https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm'},
+{d:'2026-10-29', t:'MKT', c:'macro', tier:2, s:'C', title:'Q3 GDP advance estimate + September PCE — 8:30am ET', desc:'BEA first estimate of Q3 2026 real GDP, same morning as September PCE.', src:'https://www.bea.gov/news/schedule'},
+{d:'2026-11-06', t:'MKT', c:'macro', tier:2, s:'C', title:'October jobs report — 8:30am ET', desc:'BLS Employment Situation for reference month October 2026.', src:'https://www.bls.gov/schedule/news_release/empsit.htm'},
+{d:'2026-11-10', t:'MKT', c:'macro', tier:2, s:'C', title:'October CPI — 8:30am ET', desc:'BLS CPI for reference month October 2026.', src:'https://www.bls.gov/schedule/news_release/cpi.htm'},
+{d:'2026-11-11', t:'MKT', c:'index', tier:2, s:'C', title:'MSCI November Semi-Annual Index Review — announcement',
+ desc:'Announced after the close; rebalance trades at the Nov 30 close, effective Dec 1. IREN, CRDO and NBIS are plausible weight-change candidates.', src:'https://app2.msci.com/eqb/pressreleases/archive/ir_dates.csv'},
+{d:'2026-11-15', d2:'2026-11-20', t:'MKT', c:'conf', tier:2, s:'C', title:'SC26 Supercomputing Conference, Chicago',
+ desc:'McCormick Place. Historically a venue for HPC/AI silicon and interconnect announcements; Top500 list released during the week. Relevant to NVDA, MRVL, COHR, CRDO.', src:'https://sc26.supercomputing.org/'},
+{d:'2026-11-20', t:'MKT', c:'opex', tier:2, s:'C', title:'November monthly OPEX', desc:'Third Friday. Standard monthly expiration.', src:'https://cdn.cboe.com/resources/options/Cboe2026OPTIONSCalendar.pdf'},
+{d:'2026-11-25', t:'MKT', c:'macro', tier:2, s:'C', title:'Q3 GDP second estimate + October PCE — 8:30am ET', desc:'Pulled forward ahead of Thanksgiving.', src:'https://www.bea.gov/news/schedule'},
+{d:'2026-11-26', t:'MKT', c:'closed', tier:3, s:'C', title:'Thanksgiving — markets closed', desc:'Nov 27 is a half session, early close 1:00pm ET (1:15pm for eligible options).', src:'https://www.nyse.com/markets/hours-calendars'},
+{d:'2026-11-30', t:'MKT', c:'index', tier:2, s:'C', title:'MSCI rebalance trade at close + Nasdaq-100 ranking date',
+ desc:'MSCI Nov SAIR changes trade at the Nov 30 close for a Dec 1 effective date. Same day is the NDX ranking reference date that determines the December annual reconstitution.', src:'https://app2.msci.com/eqb/pressreleases/archive/ir_dates.csv'},
+{d:'2026-12-04', t:'MKT', c:'macro', tier:2, s:'C', title:'November jobs report — 8:30am ET', desc:'Last payrolls print before the Dec 8–9 FOMC. S&P December rebalance announcement expected the same day.', src:'https://www.bls.gov/schedule/news_release/empsit.htm'},
+{d:'2026-12-09', t:'MKT', c:'macro', tier:1, s:'C', title:'FOMC decision + SEP + press conference — final meeting of 2026',
+ desc:'Two-day meeting Dec 8–9; statement 14:00 ET with dot plot (first 2029 projections) and Chair presser 14:30 ET.', src:'https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm'},
+{d:'2026-12-10', t:'MKT', c:'macro', tier:2, s:'C', title:'November CPI — 8:30am ET', desc:'Final CPI print of the calendar year; December CPI releases in January 2027.', src:'https://www.bls.gov/schedule/news_release/cpi.htm'},
+{d:'2026-12-11', t:'MKT', c:'index', tier:1, s:'E', title:'Nasdaq-100 annual reconstitution announced + Russell semi-annual recon',
+ desc:'NDX reconstitution published after the close (effective open Dec 21). Same day: the first-ever December Russell semi-annual reconstitution rebalances at the close — FTSE Russell moved it from November, so any calendar showing a November 2026 Russell recon is wrong. Very large closing-auction volume in small/mid caps.',
+ src:'https://research.ftserussell.com/products/index-notices/home/getnotice/?id=2617649'},
+{d:'2026-12-12', d2:'2026-12-16', t:'MKT', c:'conf', tier:3, s:'C', title:'IEDM 2026, San Francisco',
+ desc:'72nd IEEE International Electron Devices Meeting. Leading-edge process/device disclosures from TSMC, Intel, Samsung, IMEC.', src:'https://ieee-iedm.org/'},
+{d:'2026-12-18', t:'MKT', c:'opex', tier:1, s:'C', title:'December quad witching — largest expiration of the year',
+ desc:'Third Friday. Annual LEAPS, quarterly index futures/options and single-stock options all roll. Coincides with FTSE GEIS rebalance trades at the close.',
+ src:'https://cdn.cboe.com/resources/options/Cboe2026OPTIONSCalendar.pdf'},
+{d:'2026-12-21', t:'MKT', c:'index', tier:1, s:'E', title:'S&P December rebalance + Nasdaq-100 reconstitution effective',
+ desc:'Two of the largest index-tracking flows of the year land on the same open.', src:'https://indexes.nasdaq.com/docs/Methodology_NDX.pdf'},
+{d:'2026-12-23', t:'MKT', c:'macro', tier:2, s:'C', title:'Q3 GDP third estimate + November PCE — 8:30am ET', desc:'Final PCE print of 2026. No Q4 GDP release falls inside the window.', src:'https://www.bea.gov/news/schedule'},
+{d:'2026-12-25', t:'MKT', c:'closed', tier:3, s:'C', title:'Christmas — markets closed', desc:'Dec 24 is a half session (1:00pm ET close). Dec 28–31 are full sessions.', src:'https://www.nyse.com/markets/hours-calendars'}
+];
+
+
+const START = new Date('2026-08-17T00:00:00');
+const END   = new Date('2026-12-31T00:00:00');
+const TODAY = new Date('2026-08-16T00:00:00');
+const SPAN  = (END - START) / 86400000;
+const CATKEYS = Object.keys(CATS);
+const TICKS = POSITIONS.map(p => p.t).concat(['MKT']);
+const TNAME = {}; POSITIONS.forEach(p => TNAME[p.t] = p.name); TNAME['MKT'] = 'Market-wide';
+const PX = {}; POSITIONS.forEach(p => PX[p.t] = p);
+const CONFLBL = {C:'Confirmed', E:'Est', S:'Spec'};
+
+const state = {
+  cats: new Set(CATKEYS),
+  ticks: new Set(TICKS),
+  conf: new Set(['C','E','S'])
+};
+
+const D = s => new Date(s + 'T00:00:00');
+const pct = d => Math.max(0, Math.min(100, ((D(d) - START) / 86400000) / SPAN * 100));
+const cvar = c => 'var(--c-' + c + ')';
+const fmtDay = s => { const d = D(s); return d.toLocaleDateString('en-US', {month:'short', day:'numeric'}); };
+const fmtDow = s => D(s).toLocaleDateString('en-US', {weekday:'short'});
+const esc = s => String(s).replace(/[&<>"]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+
+const sorted = EVENTS.slice().sort((a,b) => a.d < b.d ? -1 : a.d > b.d ? 1 : (a.tier||2) - (b.tier||2));
+const visible = () => sorted.filter(e => state.cats.has(e.c) && state.ticks.has(e.t) && state.conf.has(e.s));
+
+/* ---------- tooltip ---------- */
+const tip = document.getElementById('tip');
+function showTip(html, ev){
+  tip.innerHTML = html; tip.style.opacity = 1;
+  const r = tip.getBoundingClientRect();
+  let x = ev.clientX + 14, y = ev.clientY + 14;
+  if (x + r.width > innerWidth - 10) x = ev.clientX - r.width - 14;
+  if (y + r.height > innerHeight - 10) y = ev.clientY - r.height - 14;
+  tip.style.left = x + 'px'; tip.style.top = Math.max(8, y) + 'px';
+}
+const hideTip = () => tip.style.opacity = 0;
+
+/* ---------- tiles ---------- */
+function renderTiles(){
+  const v = visible();
+  const conf = v.filter(e => e.s === 'C').length;
+  const soon = v.filter(e => { const d = D(e.d); return d >= TODAY && (d - TODAY)/86400000 <= 14; }).length;
+  const major = v.filter(e => e.tier === 1).length;
+  const weeks = {};
+  v.forEach(e => { const w = wkIdx(e.d); weeks[w] = (weeks[w]||0)+1; });
+  let bw = -1, bc = 0;
+  Object.entries(weeks).forEach(([w,c]) => { if (c > bc){ bc = c; bw = +w; } });
+  const bwStart = new Date(START.getTime() + bw*7*86400000);
+  const bwLbl = bw < 0 ? '—' : bwStart.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  document.getElementById('tiles').innerHTML = [
+    ['Catalysts in window', v.length, v.length === sorted.length ? 'all filters on' : sorted.length + ' before filtering'],
+    ['Company-confirmed', conf, Math.round(conf/Math.max(1,v.length)*100) + '% of the calendar'],
+    ['Next 14 days', soon, 'through 30 Aug'],
+    ['Major movers', major, 'tier-1 events'],
+    ['Busiest week', bc, bw < 0 ? '—' : 'week of ' + bwLbl]
+  ].map(([l,val,f]) => `<div class="tile"><div class="lbl">${l}</div><div class="val">${val}</div><div class="foot">${f}</div></div>`).join('');
+}
+const wkIdx = d => Math.floor((D(d) - START) / 86400000 / 7);
+
+/* ---------- filter chips ---------- */
+function renderChips(){
+  const counts = {}; CATKEYS.forEach(k => counts[k] = 0);
+  const tc = {}; TICKS.forEach(t => tc[t] = 0);
+  sorted.forEach(e => { counts[e.c]++; tc[e.t]++; });
+
+  document.getElementById('catChips').innerHTML = CATKEYS.map(k =>
+    `<span class="chip ${state.cats.has(k)?'':'off'}" data-kind="cat" data-k="${k}">
+       <span class="dot" style="background:${cvar(k)}"></span>${CATS[k].label}<span class="n">${counts[k]}</span></span>`).join('');
+
+  document.getElementById('tickChips').innerHTML = TICKS.map(t =>
+    `<span class="chip tick ${state.ticks.has(t)?'':'off'}" data-kind="tick" data-k="${t}">${t === 'MKT' ? 'MARKET' : t}<span class="n">${tc[t]}</span></span>`).join('');
+
+  document.getElementById('confChips').innerHTML = [['C','Company-confirmed'],['E','Estimated'],['S','Speculative']].map(([k,l]) =>
+    `<span class="chip ${state.conf.has(k)?'':'off'}" data-kind="conf" data-k="${k}">${l}<span class="n">${sorted.filter(e=>e.s===k).length}</span></span>`).join('');
+}
+
+document.addEventListener('click', e => {
+  const c = e.target.closest('.chip'); if (!c) return;
+  const set = c.dataset.kind === 'cat' ? state.cats : c.dataset.kind === 'tick' ? state.ticks : state.conf;
+  const k = c.dataset.k;
+  set.has(k) ? set.delete(k) : set.add(k);
+  renderAll();
+});
+document.getElementById('resetBtn').onclick = () => {
+  state.cats = new Set(CATKEYS); state.ticks = new Set(TICKS); state.conf = new Set(['C','E','S']);
+  renderAll();
+};
+document.getElementById('tblBtn').onclick = e => {
+  const t = document.getElementById('tableCard'), a = document.getElementById('agendaCard');
+  const on = t.classList.toggle('hide');
+  a.classList.toggle('hide', !on);
+  e.target.textContent = on ? 'Table view' : 'Calendar view';
+};
+
+/* ---------- density chart ---------- */
+function renderBars(){
+  const v = visible();
+  const NW = Math.ceil(SPAN / 7);
+  const buckets = Array.from({length:NW}, () => ({}));
+  v.forEach(e => { const w = Math.min(NW-1, Math.max(0, wkIdx(e.d))); buckets[w][e.c] = (buckets[w][e.c]||0)+1; });
+  const max = Math.max(1, ...buckets.map(b => Object.values(b).reduce((a,c)=>a+c,0)));
+  document.getElementById('ymax').textContent = max + ' events';
+
+  document.getElementById('bars').innerHTML = buckets.map((b,i) => {
+    const tot = Object.values(b).reduce((a,c)=>a+c,0);
+    const segs = CATKEYS.filter(k => b[k]).map((k,j,arr) =>
+      `<div class="seg ${j===arr.length-1?'top':''}" style="height:${b[k]/max*128}px;background:${cvar(k)}"></div>`).reverse().join('');
+    const ws = new Date(START.getTime() + i*7*86400000);
+    const we = new Date(ws.getTime() + 6*86400000);
+    const rows = CATKEYS.filter(k=>b[k]).map(k =>
+      `<div class="tr"><span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:${cvar(k)};margin-right:6px"></span>${CATS[k].label}</span><span>${b[k]}</span></div>`).join('');
+    const tt = `<div class="tt">Week of ${ws.toLocaleDateString('en-US',{month:'short',day:'numeric'})} – ${we.toLocaleDateString('en-US',{month:'short',day:'numeric'})}</div>
+                <div class="tm" style="margin-bottom:5px">${tot} catalyst${tot===1?'':'s'}</div>${rows}`;
+    return `<div class="wk" data-tt="${esc(tt)}">${segs}</div>`;
+  }).join('');
+
+  document.getElementById('xaxis').innerHTML = buckets.map((_,i) => {
+    const ws = new Date(START.getTime() + i*7*86400000);
+    return `<span>${(i%2===0 || i===NW-1) ? ws.toLocaleDateString('en-US',{month:'short',day:'numeric'}) : ''}</span>`;
+  }).join('');
+
+  document.querySelectorAll('.wk').forEach(el => {
+    el.onmousemove = ev => showTip(el.dataset.tt, ev);
+    el.onmouseleave = hideTip;
+  });
+
+  document.getElementById('legend').innerHTML = CATKEYS.filter(k => state.cats.has(k)).map(k =>
+    `<i><b style="background:${cvar(k)}"></b>${CATS[k].label}</i>`).join('');
+}
+
+/* ---------- catalyst map ---------- */
+function renderMap(){
+  const v = visible();
+  const months = ['2026-09-01','2026-10-01','2026-11-01','2026-12-01'];
+  document.getElementById('monthgrid').innerHTML =
+    `<span style="left:0; transform:none">Aug</span>` +
+    months.map(m => `<span style="left:${pct(m)}%">${D(m).toLocaleDateString('en-US',{month:'short'})}</span>`).join('');
+
+  const rows = TICKS.filter(t => state.ticks.has(t)).map(t => {
+    const evs = v.filter(e => e.t === t);
+    const p = PX[t];
+    const chg = p ? ((p.price - p.prev)/p.prev*100) : null;
+    const marks = evs.map(e => {
+      const l = pct(e.d);
+      const tt = `<div class="tt">${esc(e.title)}</div><div class="tm">${t==='MKT'?'Market-wide':t} &middot; ${fmtDay(e.d)}${e.d2?' – '+fmtDay(e.d2):''} &middot; ${CATS[e.c].label} &middot; ${CONFLBL[e.s]}</div>`;
+      const range = e.d2 ? `<div class="mk rng" style="left:${l}%; width:${Math.max(0.6, pct(e.d2)-l)}%; background:${cvar(e.c)}"></div>` : '';
+      return range + `<div class="mk t${e.tier||2} ${e.s!=='C'?'est':''}" style="left:${l}%; background:${cvar(e.c)}; ${e.s!=='C'?'border:2px solid '+cvar(e.c):''}" data-tt="${esc(tt)}"></div>`;
+    }).join('');
+    const vl = months.map(m => `<div class="vline" style="left:${pct(m)}%"></div>`).join('');
+    return `<div class="maprow${t==='MKT'?' mkt':''}">
+      <div class="tk"><span>${t === 'MKT' ? 'MARKET' : t}</span>${p ? `<span class="px">${chg>=0?'+':''}${chg.toFixed(1)}%</span>` : ''}</div>
+      <div class="track">${vl}<div class="today" style="left:0"></div>${marks}</div></div>`;
+  }).join('');
+  document.getElementById('maprows').innerHTML = rows || '<div class="empty">No positions selected.</div>';
+
+  document.querySelectorAll('.mk[data-tt]').forEach(el => {
+    el.onmousemove = ev => showTip(el.dataset.tt, ev);
+    el.onmouseleave = hideTip;
+  });
+}
+
+/* ---------- agenda ---------- */
+function renderAgenda(){
+  const v = visible();
+  document.getElementById('agendaSub').textContent =
+    v.length + ' catalyst' + (v.length===1?'':'s') + ' · gold star marks a tier-1 mover';
+  if (!v.length){ document.getElementById('agenda').innerHTML = '<div class="empty">Nothing matches these filters.</div>'; return; }
+
+  const groups = {};
+  v.forEach(e => { const k = e.d.slice(0,7); (groups[k] = groups[k] || []).push(e); });
+
+  document.getElementById('agenda').innerHTML = Object.entries(groups).map(([m, evs]) => {
+    const lbl = D(m + '-01').toLocaleDateString('en-US', {month:'long', year:'numeric'});
+    return `<div class="month"><div class="mhdr"><h3>${lbl}</h3><span class="cnt">${evs.length} event${evs.length===1?'':'s'}</span></div>` +
+      evs.map(e => `<div class="ev">
+        <div class="dt">${fmtDay(e.d)}<span class="dow">${e.d2 ? '– '+fmtDay(e.d2) : fmtDow(e.d)}</span></div>
+        <div class="bd">
+          <div class="top">
+            <span class="tkbadge">${e.t === 'MKT' ? 'MARKET' : e.t}</span>
+            <span class="tag"><span class="dot" style="background:${cvar(e.c)}"></span>${CATS[e.c].label}</span>
+            <span class="conf ${e.s}">${CONFLBL[e.s]}</span>
+            ${e.tier === 1 ? '<span class="star">&#9733;</span>' : ''}
+          </div>
+          <div class="ttl ${e.tier===1?'major':''}">${esc(e.title)}</div>
+          <div class="ds">${esc(e.desc)}</div>
+          <div class="src"><a href="${e.src}" target="_blank" rel="noopener">source</a></div>
+        </div></div>`).join('') + '</div>';
+  }).join('');
+}
+
+/* ---------- table ---------- */
+function renderTable(){
+  const v = visible();
+  document.getElementById('tbl').innerHTML =
+    '<thead><tr><th>Date</th><th>Ticker</th><th>Type</th><th>Confidence</th><th>Event</th></tr></thead><tbody>' +
+    v.map(e => `<tr>
+      <td class="d">${e.d}${e.d2 ? ' → ' + e.d2 : ''}</td>
+      <td><strong>${e.t === 'MKT' ? 'MARKET' : e.t}</strong></td>
+      <td><span class="tag"><span class="dot" style="background:${cvar(e.c)}"></span>${CATS[e.c].label}</span></td>
+      <td><span class="conf ${e.s}">${CONFLBL[e.s]}</span></td>
+      <td>${esc(e.title)}</td></tr>`).join('') + '</tbody>';
+}
+
+function renderAll(){ renderChips(); renderTiles(); renderBars(); renderMap(); renderAgenda(); renderTable(); }
+
+/* ---------- theme ---------- */
+const btn = document.getElementById('themeBtn');
+if (matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.dataset.theme = 'dark';
+const syncBtn = () => btn.textContent = document.documentElement.dataset.theme === 'dark' ? 'Light mode' : 'Dark mode';
+btn.onclick = () => {
+  document.documentElement.dataset.theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+  syncBtn(); renderBars(); renderMap();
+};
+syncBtn();
+renderAll();
+</script>
+</body>
+</html>
