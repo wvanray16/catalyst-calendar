@@ -1,0 +1,42 @@
+name: Weekly calendar refresh
+
+on:
+  schedule:
+    # Sundays 13:00 UTC — after Friday's close has settled, before Monday's open.
+    - cron: '0 13 * * 0'
+  workflow_dispatch:        # lets you run it on demand from the Actions tab
+
+permissions:
+  contents: write           # the job commits the refreshed index.html
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Refresh calendar data
+        env:
+          # Optional. Without it the job runs on Yahoo alone, which still
+          # covers prices and most dates.
+          FINNHUB_TOKEN: ${{ secrets.FINNHUB_TOKEN }}
+        run: npm run update
+
+      - name: Commit if anything changed
+        run: |
+          if git diff --quiet -- index.html; then
+            echo "No changes this week."
+            exit 0
+          fi
+          git config user.name  "catalyst-calendar bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Weekly refresh: $(date -u +%Y-%m-%d)"
+          git push

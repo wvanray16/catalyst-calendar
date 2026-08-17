@@ -1,0 +1,17 @@
+{
+  "name": "catalyst-calendar",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Aug-Dec 2026 catalyst calendar — a self-contained static page with a weekly data refresh",
+  "type": "module",
+  "scripts": {
+    "update": "node scripts/update-calendar.mjs",
+    "update:dry": "node scripts/update-calendar.mjs --dry"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "yahoo-finance2": "^3.15.3"
+  }
+}

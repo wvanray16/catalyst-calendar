@@ -159,7 +159,7 @@ td.d{font-variant-numeric:tabular-nums; white-space:nowrap; color:var(--text-sec
   <div class="hdr">
     <div>
       <h1>Catalyst Calendar</h1>
-      <p class="sub">13 positions &middot; 17 Aug – 31 Dec 2026 &middot; prices as of the 14 Aug close &middot; built 16 Aug 2026</p>
+      <p class="sub" id="sub"></p>
     </div>
     <button class="themebtn" id="themeBtn">Dark mode</button>
   </div>
@@ -237,19 +237,19 @@ td.d{font-variant-numeric:tabular-nums; white-space:nowrap; color:var(--text-sec
 // tier: 1 = major mover, 2 = standard, 3 = context
 
 const POSITIONS = [
-  {t:'AMKR', name:'Amkor Technology',        price:59.02,   prev:57.75,  note:'OSAT / advanced packaging'},
-  {t:'APLD', name:'Applied Digital',         price:31.195,  prev:30.62,  note:'AI datacenter REIT-alike'},
-  {t:'AMPX', name:'Amprius Technologies',    price:12.505,  prev:11.94,  note:'Silicon-anode batteries'},
-  {t:'BE',   name:'Bloom Energy',            price:229.905, prev:236.22, note:'Fuel cells / DC power'},
-  {t:'COHR', name:'Coherent Corp',           price:325.93,  prev:327.23, note:'Optics / transceivers'},
-  {t:'CRDO', name:'Credo Technology',        price:260.07,  prev:265.99, note:'AEC / connectivity'},
-  {t:'GLW',  name:'Corning',                 price:165.98,  prev:158.54, note:'Optical fiber / glass'},
-  {t:'NVDA', name:'NVIDIA',                  price:225.17,  prev:225.30, note:'AI accelerators'},
-  {t:'SPCX', name:'SpaceX (+xAI)',           price:139.84,  prev:141.29, note:'Space + AI — IPO 6/12/26'},
-  {t:'IREN', name:'IREN Limited',            price:44.035,  prev:44.76,  note:'AI cloud / datacenters'},
+  {t:'AMKR', name:'Amkor Technology',        price:58.99,   prev:57.75,  note:'OSAT / advanced packaging'},
+  {t:'APLD', name:'Applied Digital',         price:31.2,  prev:30.62,  note:'AI datacenter REIT-alike'},
+  {t:'AMPX', name:'Amprius Technologies',    price:12.51,  prev:11.94,  note:'Silicon-anode batteries'},
+  {t:'BE',   name:'Bloom Energy',            price:229.94, prev:236.22, note:'Fuel cells / DC power'},
+  {t:'COHR', name:'Coherent Corp',           price:325.83,  prev:327.23, note:'Optics / transceivers'},
+  {t:'CRDO', name:'Credo Technology',        price:259.9,  prev:265.99, note:'AEC / connectivity'},
+  {t:'GLW',  name:'Corning',                 price:165.99,  prev:158.54, note:'Optical fiber / glass'},
+  {t:'NVDA', name:'NVIDIA',                  price:225.16,  prev:225.3, note:'AI accelerators'},
+  {t:'SPCX', name:'SpaceX (+xAI)',           price:140,  prev:141.29, note:'Space + AI — IPO 6/12/26'},
+  {t:'IREN', name:'IREN Limited',            price:44.06,  prev:44.76,  note:'AI cloud / datacenters'},
   {t:'NBIS', name:'Nebius Group',            price:277.68,  prev:255.04, note:'AI cloud infrastructure'},
-  {t:'MRVL', name:'Marvell Technology',      price:221.96,  prev:222.18, note:'Custom silicon / optics'},
-  {t:'DRAM', name:'Roundhill Memory ETF',    price:57.315,  prev:56.93,  note:'ETF — memory complex'}
+  {t:'MRVL', name:'Marvell Technology',      price:222.02,  prev:222.18, note:'Custom silicon / optics'},
+  {t:'DRAM', name:'Roundhill Memory ETF',    price:57.32,  prev:56.93,  note:'ETF — memory complex'}
 ];
 
 const CATS = {
@@ -312,7 +312,7 @@ const EVENTS = [
 {d:'2026-09-30', t:'COHR', c:'supply', tier:2, s:'C', title:'Indium phosphide 6-inch output doubling completes',
  desc:'Management said InP output doubles by end of the September quarter — one quarter ahead of the original plan. Confirmation expected on the FQ1 call.',
  src:'https://futurumgroup.com/insights/coherent-q4-fy-2026-earnings-1-6t-transceivers-ramp-cpo-revenue-approaches/'},
-{d:'2026-11-11', t:'COHR', c:'earnings', tier:1, s:'E', title:'FQ1 FY2027 earnings — AMC (expected, range Nov 4–11)',
+{d:'2026-11-04', t:'COHR', c:'earnings', tier:1, s:'E', title:'FQ1 FY2027 earnings — AMC (expected, range Nov 4–11)',
  desc:'Guide: revenue $2.2–2.4B, non-GAAP GM 39.5–41.5%, non-GAAP EPS $1.85–2.05. Management said 1.6T customer adoption is running ahead of the guide given three months earlier. Target: first >$3B revenue quarter by end of FY27.',
  src:'https://www.tipranks.com/stocks/cohr/earnings'},
 {d:'2026-12-01', d2:'2026-12-31', t:'COHR', c:'product', tier:1, s:'C', title:'First co-packaged optics (CPO) revenue — Dec quarter',
@@ -327,7 +327,7 @@ const EVENTS = [
 {d:'2026-10-09', t:'GLW', c:'dividend', tier:3, s:'E', title:'Q4 dividend declaration — possible first raise',
  desc:'Board declaration for the December payment. $0.28 has been held flat through 2025 and all of 2026 to date, so a raise here would be the first in that span.',
  src:'https://stockanalysis.com/stocks/glw/dividend/'},
-{d:'2026-11-03', t:'GLW', c:'earnings', tier:1, s:'E', title:'Q3 2026 earnings — BMO (expected, range Oct 27–Nov 3)',
+{d:'2026-10-27', t:'GLW', c:'earnings', tier:1, s:'E', title:'Q3 2026 earnings — BMO (expected, range Oct 27–Nov 3)',
  desc:'Guide: sales $4.9–5.0B (~+16% y/y), core EPS $0.85–0.89 (~+28% y/y). The stock fell 12–18% off the July 28 print despite a beat, so this is a two-sided re-rating event.',
  src:'https://marketchameleon.com/Overview/GLW/Earnings/Earnings-Dates/'},
 {d:'2026-11-13', t:'GLW', c:'dividend', tier:3, s:'E', title:'Q4 ex-dividend / record date', desc:'Based on 2025 pattern (ex 2025-11-14).', src:'https://stockanalysis.com/stocks/glw/dividend/'},
@@ -339,7 +339,7 @@ const EVENTS = [
 // ─────────────── AMKR ───────────────
 {d:'2026-09-02', t:'AMKR', c:'dividend', tier:3, s:'C', title:'Ex-dividend / record date ($0.08352)', desc:'Declared 2026-08-12. Ex-date and record date both 2026-09-02.', src:'https://ir.amkor.com/stock-information/dividends-splits'},
 {d:'2026-09-22', t:'AMKR', c:'dividend', tier:3, s:'C', title:'Dividend pay date ($0.08352)', desc:'Paid 2026-09-22. ~0.3% yield — immaterial in size.', src:'https://www.businesswire.com/news/home/20260812257497/en/Amkor-Technology-Declares-Quarterly-Dividend'},
-{d:'2026-11-02', t:'AMKR', c:'earnings', tier:1, s:'E', title:'Q3 2026 earnings — AMC (expected, range Oct 26–Nov 2)',
+{d:'2026-10-26', t:'AMKR', c:'earnings', tier:1, s:'E', title:'Q3 2026 earnings — AMC (expected, range Oct 26–Nov 2)',
  desc:'Guide: net sales $1.95–2.05B, GM 18.5–19.5%, EPS $0.72–0.82; FY26 capex $2.5–3.0B. Measured against the May-2026 Investor Day 2030 model of $11B+ revenue / 22%+ GM / $5.00+ EPS. Anchor deals: TSMC 10-year Arizona agreement (June) and NVIDIA $1.5B partnership (July).',
  src:'https://www.tipranks.com/stocks/amkr/earnings'},
 {d:'2026-11-12', t:'AMKR', c:'dividend', tier:3, s:'E', title:'Q4 dividend declaration — historical raise spot',
@@ -376,7 +376,7 @@ const EVENTS = [
  src:'https://iren.com/investors/news'},
 
 // ─────────────── NBIS ───────────────
-{d:'2026-11-12', t:'NBIS', c:'earnings', tier:1, s:'E', title:'Q3 2026 earnings — BMO (expected, range Nov 10–18)',
+{d:'2026-11-10', t:'NBIS', c:'earnings', tier:1, s:'E', title:'Q3 2026 earnings — BMO (expected, range Nov 10–18)',
  desc:'Also the highest-probability venue for the promised first formal FY2027 guidance, which management explicitly deferred to "later in 2026." The Q4 print falls in Feb 2027, so this is the dominant information event of the window.',
  src:'https://www.investing.com/equities/yandex-nv-earnings'},
 {d:'2026-10-01', d2:'2026-12-31', t:'NBIS', c:'supply', tier:1, s:'C', title:'Premium short-term capacity deal goes live — Q4',
@@ -443,7 +443,7 @@ const EVENTS = [
 {d:'2026-10-25', t:'SPCX', c:'supply', tier:2, s:'E', title:'Lockup tranche ~7% (day 135) — last time-based tranche',
  desc:'By roughly this point the public float is estimated to reach ~one third of shares outstanding.',
  src:'https://www.investing.com/analysis/spacex-lockup-countdown-when-shares-may-become-safer-to-buy-200682574'},
-{d:'2026-11-17', t:'SPCX', c:'earnings', tier:1, s:'E', title:'Q3 2026 earnings — AMC (expected), second-ever public print',
+{d:'2026-11-03', t:'SPCX', c:'earnings', tier:1, s:'E', title:'Q3 2026 earnings — AMC (expected), second-ever public print',
  desc:'Not company-announced. First print (2026-08-04) beat at -$0.09 vs -$0.16 est. Consensus now models a swing to positive EPS (~+$0.14).',
  src:'https://finance.yahoo.com/markets/stocks/articles/spacex-q2-2026-earnings-date-170755440.html'},
 {d:'2026-11-19', d2:'2026-11-24', t:'SPCX', c:'supply', tier:1, s:'E', title:'Q3-earnings-linked lockup tranche — up to 28%',
@@ -539,9 +539,18 @@ const EVENTS = [
 ];
 
 
+/* Refreshed weekly by scripts/update-calendar.mjs — edit by hand only if the
+   updater is off. Everything between the AUTO markers is machine-managed. */
+/* <<<AUTO:META>>> */
+const PRICED = '2026-08-17';   // as-of date for the POSITIONS prices below
+const UPDATED = '2026-08-17';  // last successful automated refresh
+/* <<<END:META>>> */
+
 const START = new Date('2026-08-17T00:00:00');
 const END   = new Date('2026-12-31T00:00:00');
-const TODAY = new Date('2026-08-16T00:00:00');
+/* Live, so the "today" line and the NEXT 14 DAYS tile stay correct between
+   deploys instead of freezing on the date the page was last built. */
+const TODAY = (() => { const n = new Date(); return new Date(n.getFullYear(), n.getMonth(), n.getDate()); })();
 const SPAN  = (END - START) / 86400000;
 const CATKEYS = Object.keys(CATS);
 const TICKS = POSITIONS.map(p => p.t).concat(['MKT']);
@@ -754,6 +763,17 @@ btn.onclick = () => {
   syncBtn(); renderBars(); renderMap();
 };
 syncBtn();
+
+/* ---------- header line (dates come from the AUTO:META block) ---------- */
+/* Format from local parts — toISOString() would shift the day east of UTC. */
+const iso = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+document.getElementById('sub').textContent = [
+  `${POSITIONS.length} positions`,
+  `${fmtDay(iso(START))} – ${fmtDay(iso(END))} ${END.getFullYear()}`,
+  `prices as of the ${fmtDay(PRICED)} close`,
+  `updated ${fmtDay(UPDATED)}`
+].join(' · ');
+
 renderAll();
 </script>
 </body>

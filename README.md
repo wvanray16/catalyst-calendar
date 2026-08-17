@@ -17,7 +17,38 @@ Deployed on Render as a **Static Site**:
 Pushing to `main` redeploys automatically. `render.yaml` is only needed if you
 create the service via Render's Blueprint flow; the plain Static Site UI ignores it.
 
-## Editing
+## Weekly refresh
+
+`.github/workflows/weekly-update.yml` runs `scripts/update-calendar.mjs` every
+Sunday at 13:00 UTC (and on demand from the Actions tab). It commits any changes,
+which Render then auto-deploys.
+
+What it maintains:
+
+| Refreshed automatically | Stays hand-curated |
+|---|---|
+| Prices in `POSITIONS` | Conferences, product launches, capital raises |
+| Earnings dates + confirmed/estimated flag | Macro prints (published a year ahead) |
+| Ex-dividend and pay dates | Index rebalances, OPEX, market holidays |
+
+The script is deliberately conservative. It only writes dates, prices, and the
+`s` confidence flag — never a `title`, `desc`, or `src`, since those hold
+research no API can reproduce. It never deletes an event, never overwrites a
+company-confirmed date with an API estimate, and refuses to write at all if the
+output size drifts more than 2 KB from the input (the signature of a parse bug).
+A dead data source degrades to "no changes," not a broken page.
+
+Data comes from Yahoo (no key required). Setting a `FINNHUB_TOKEN` repository
+secret adds Finnhub as the preferred earnings source; without it the job still
+runs on Yahoo alone.
+
+Preview what a run would do without touching anything:
+
+```bash
+npm run update:dry
+```
+
+## Editing by hand
 
 Open `index.html` and edit the `EVENTS` array near the middle of the file. Each
 entry looks like:
