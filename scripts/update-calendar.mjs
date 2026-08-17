@@ -26,7 +26,11 @@ const MATCH_DAYS = 45;
 const changes = [];
 const problems = [];
 
-const todayISO = () => new Date().toISOString().slice(0, 10);
+/* Local parts, not toISOString() — UTC rolls over mid-evening in US timezones
+   and would stamp tomorrow's date on today's run. */
+const localISO = (d = new Date()) =>
+  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+const todayISO = () => localISO();
 const daysBetween = (a, b) => Math.abs((new Date(a) - new Date(b)) / 86400000);
 const isISO = s => typeof s === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(s);
 
@@ -52,6 +56,9 @@ async function yahooFacts(tickers) {
       const q = await yf.quoteSummary(t, { modules: ['price', 'calendarEvents', 'summaryDetail'] });
       const price = q?.price?.regularMarketPrice;
       const prev = q?.price?.regularMarketPreviousClose;
+      /* The last actual trade — on a Sunday run this is Friday's close, which
+         is what the header should claim rather than the day the job ran. */
+      const asOf = q?.price?.regularMarketTime;
       const earnings = q?.calendarEvents?.earnings?.earningsDate?.[0];
       const exDiv = q?.calendarEvents?.exDividendDate ?? q?.summaryDetail?.exDividendDate;
       const payDiv = q?.calendarEvents?.dividendDate;
@@ -59,6 +66,7 @@ async function yahooFacts(tickers) {
       out[t] = {
         price: Number.isFinite(price) ? price : undefined,
         prev: Number.isFinite(prev) ? prev : undefined,
+        asOf: asOf ? localISO(new Date(asOf)) : undefined,
         earnings: earnings ? new Date(earnings).toISOString().slice(0, 10) : undefined,
         /* Yahoo flags an earnings date as estimated when the company has not
            announced it; only a confirmed date should flip an event to 'C'. */
@@ -241,9 +249,12 @@ for (const t of tickers) {
 }
 html = lines.join('\n');
 
-/* Stamp the refresh dates only if something actually moved. */
+/* Stamp the refresh dates only if something actually moved. PRICED is the
+   latest trade date the quotes carried; fall back to the run date if no
+   source reported one. */
 if (changes.length) {
-  html = html.replace(/(const PRICED = ')[\d-]+(')/, `$1${todayISO()}$2`)
+  const priced = Object.values(yahoo).map(f => f?.asOf).filter(isISO).sort().pop() || todayISO();
+  html = html.replace(/(const PRICED = ')[\d-]+(')/, `$1${priced}$2`)
              .replace(/(const UPDATED = ')[\d-]+(')/, `$1${todayISO()}$2`);
 }
 
