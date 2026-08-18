@@ -237,19 +237,21 @@ td.d{font-variant-numeric:tabular-nums; white-space:nowrap; color:var(--text-sec
 // tier: 1 = major mover, 2 = standard, 3 = context
 
 const POSITIONS = [
-  {t:'AMKR', name:'Amkor Technology',        price:58.99,   prev:57.75,  note:'OSAT / advanced packaging'},
-  {t:'APLD', name:'Applied Digital',         price:31.2,  prev:30.62,  note:'AI datacenter REIT-alike'},
-  {t:'AMPX', name:'Amprius Technologies',    price:12.51,  prev:11.94,  note:'Silicon-anode batteries'},
-  {t:'BE',   name:'Bloom Energy',            price:229.94, prev:236.22, note:'Fuel cells / DC power'},
-  {t:'COHR', name:'Coherent Corp',           price:325.83,  prev:327.23, note:'Optics / transceivers'},
-  {t:'CRDO', name:'Credo Technology',        price:259.9,  prev:265.99, note:'AEC / connectivity'},
-  {t:'GLW',  name:'Corning',                 price:165.99,  prev:158.54, note:'Optical fiber / glass'},
-  {t:'NVDA', name:'NVIDIA',                  price:225.16,  prev:225.3, note:'AI accelerators'},
-  {t:'SPCX', name:'SpaceX (+xAI)',           price:140,  prev:141.29, note:'Space + AI — IPO 6/12/26'},
-  {t:'IREN', name:'IREN Limited',            price:44.06,  prev:44.76,  note:'AI cloud / datacenters'},
-  {t:'NBIS', name:'Nebius Group',            price:277.68,  prev:255.04, note:'AI cloud infrastructure'},
-  {t:'MRVL', name:'Marvell Technology',      price:222.02,  prev:222.18, note:'Custom silicon / optics'},
-  {t:'DRAM', name:'Roundhill Memory ETF',    price:57.32,  prev:56.93,  note:'ETF — memory complex'}
+  {t:'AMKR', name:'Amkor Technology',        price:61.3,   prev:58.99,  note:'OSAT / advanced packaging'},
+  {t:'APLD', name:'Applied Digital',         price:31.18,  prev:31.2,  note:'AI datacenter REIT-alike'},
+  {t:'AMPX', name:'Amprius Technologies',    price:11.58,  prev:12.51,  note:'Silicon-anode batteries'},
+  {t:'BE',   name:'Bloom Energy',            price:232.16, prev:229.94, note:'Fuel cells / DC power'},
+  {t:'COHR', name:'Coherent Corp',           price:351.22,  prev:325.83, note:'Optics / transceivers'},
+  {t:'CRDO', name:'Credo Technology',        price:282.82,  prev:259.9, note:'AEC / connectivity'},
+  {t:'GLW',  name:'Corning',                 price:173.21,  prev:165.99, note:'Optical fiber / glass'},
+  {t:'NVDA', name:'NVIDIA',                  price:225.01,  prev:225.16, note:'AI accelerators'},
+  {t:'SPCX', name:'SpaceX (+xAI)',           price:146.23,  prev:140, note:'Space + AI — IPO 6/12/26'},
+  {t:'IREN', name:'IREN Limited',            price:44.9,  prev:44.06,  note:'AI cloud / datacenters'},
+  {t:'NBIS', name:'Nebius Group',            price:268.85,  prev:277.68, note:'AI cloud infrastructure'},
+  {t:'MRVL', name:'Marvell Technology',      price:234.33,  prev:222.02, note:'Custom silicon / optics'},
+  {t:'DRAM', name:'Roundhill Memory ETF',    price:60.39,  prev:57.32,  note:'ETF — memory complex'},
+  {t:'NOK',   name:'Nokia',                  price:10.78,   prev:10.76,  note:'Telecom networks / RAN'},
+  {t:'NVTS',  name:'Navitas Semiconductor',  price:14.58,   prev:14.45,  note:'GaN & SiC power semis'}
 ];
 
 const CATS = {
@@ -376,7 +378,7 @@ const EVENTS = [
  src:'https://iren.com/investors/news'},
 
 // ─────────────── NBIS ───────────────
-{d:'2026-11-10', t:'NBIS', c:'earnings', tier:1, s:'E', title:'Q3 2026 earnings — BMO (expected, range Nov 10–18)',
+{d:'2026-11-10', t:'NBIS', c:'earnings', tier:1, s:'C', title:'Q3 2026 earnings — BMO (expected, range Nov 10–18)',
  desc:'Also the highest-probability venue for the promised first formal FY2027 guidance, which management explicitly deferred to "later in 2026." The Q4 print falls in Feb 2027, so this is the dominant information event of the window.',
  src:'https://www.investing.com/equities/yandex-nv-earnings'},
 {d:'2026-10-01', d2:'2026-12-31', t:'NBIS', c:'supply', tier:1, s:'C', title:'Premium short-term capacity deal goes live — Q4',
@@ -535,14 +537,29 @@ const EVENTS = [
 {d:'2026-12-21', t:'MKT', c:'index', tier:1, s:'E', title:'S&P December rebalance + Nasdaq-100 reconstitution effective',
  desc:'Two of the largest index-tracking flows of the year land on the same open.', src:'https://indexes.nasdaq.com/docs/Methodology_NDX.pdf'},
 {d:'2026-12-23', t:'MKT', c:'macro', tier:2, s:'C', title:'Q3 GDP third estimate + November PCE — 8:30am ET', desc:'Final PCE print of 2026. No Q4 GDP release falls inside the window.', src:'https://www.bea.gov/news/schedule'},
-{d:'2026-12-25', t:'MKT', c:'closed', tier:3, s:'C', title:'Christmas — markets closed', desc:'Dec 24 is a half session (1:00pm ET close). Dec 28–31 are full sessions.', src:'https://www.nyse.com/markets/hours-calendars'}
+{d:'2026-12-25', t:'MKT', c:'closed', tier:3, s:'C', title:'Christmas — markets closed', desc:'Dec 24 is a half session (1:00pm ET close). Dec 28–31 are full sessions.', src:'https://www.nyse.com/markets/hours-calendars'},
+// ─────────────── NOK ───────────────
+{d:'2026-10-22', t:'NOK', c:'earnings', tier:1, s:'C', title:'Q3 2026 earnings — before the US open',
+ desc:'Nokia reports on Finnish market hours, so the ADR gaps at the NYSE open rather than trading the print. Network Infrastructure margin and the datacenter interconnect commentary are what matter to this complex.',
+ src:'https://www.nokia.com/about-us/investors/'},
+{d:'2026-10-27', t:'NOK', c:'dividend', tier:3, s:'E', title:'Q4 dividend installment ex-date (~$0.04)',
+ desc:'Pattern-derived: the prior installment went ex 2026-07-28. Nokia pays its annual dividend in four installments authorised at the AGM, so this is a schedule estimate, not a declaration.',
+ src:'https://www.nokia.com/about-us/investors/'},
+{d:'2026-11-10', t:'NOK', c:'dividend', tier:3, s:'E', title:'Q4 dividend installment pay date (~$0.04)',
+ desc:'Based on the 14-day ex-to-pay gap on the July installment (ex 2026-07-28, paid 2026-08-11).',
+ src:'https://www.nokia.com/about-us/investors/'},
+
+// ─────────────── NVTS ───────────────
+{d:'2026-11-03', t:'NVTS', c:'earnings', tier:1, s:'E', title:'Q3 2026 earnings — AMC (expected)',
+ desc:'Date not yet announced. Estimated from prior-year timing; the most recent confirmed print was Q2 on 2026-07-27. A small float makes the reaction outsized relative to the market cap.',
+ src:'https://finance.yahoo.com/quote/NVTS/'}
 ];
 
 
 /* Refreshed weekly by scripts/update-calendar.mjs — edit by hand only if the
    updater is off. Everything between the AUTO markers is machine-managed. */
 /* <<<AUTO:META>>> */
-const PRICED = '2026-08-14';   // as-of date for the POSITIONS prices below
+const PRICED = '2026-08-17';   // as-of date for the POSITIONS prices below
 const UPDATED = '2026-08-17';  // last successful automated refresh
 /* <<<END:META>>> */
 
