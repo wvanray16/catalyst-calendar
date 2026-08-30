@@ -237,22 +237,22 @@ td.d{font-variant-numeric:tabular-nums; white-space:nowrap; color:var(--text-sec
 // tier: 1 = major mover, 2 = standard, 3 = context
 
 const POSITIONS = [
-  {t:'AMKR', name:'Amkor Technology',        price:50.26,   prev:50.86,  note:'OSAT / advanced packaging'},
-  {t:'APLD', name:'Applied Digital',         price:27.21,  prev:28.65,  note:'AI datacenter REIT-alike'},
-  {t:'AMPX', name:'Amprius Technologies',    price:10.34,  prev:10.2,  note:'Silicon-anode batteries'},
-  {t:'BE',   name:'Bloom Energy',            price:201.45, prev:202.48, note:'Fuel cells / DC power'},
-  {t:'COHR', name:'Coherent Corp',           price:289.52,  prev:290.03, note:'Optics / transceivers'},
-  {t:'CRDO', name:'Credo Technology',        price:230.57,  prev:231.35, note:'AEC / connectivity'},
-  {t:'GLW',  name:'Corning',                 price:149.84,  prev:151.45, note:'Optical fiber / glass'},
-  {t:'NVDA', name:'NVIDIA',                  price:214.72,  prev:216.85, note:'AI accelerators'},
-  {t:'SPCX', name:'SpaceX (+xAI)',           price:136.97,  prev:134, note:'Space + AI — IPO 6/12/26'},
-  {t:'IREN', name:'IREN Limited',            price:41.88,  prev:42.6,  note:'AI cloud / datacenters'},
-  {t:'NBIS', name:'Nebius Group',            price:219.13,  prev:220.11, note:'AI cloud infrastructure'},
-  {t:'MRVL', name:'Marvell Technology',      price:237.04,  prev:251.01, note:'Custom silicon / optics'},
-  {t:'DRAM', name:'Roundhill Memory ETF',    price:57.68,  prev:57.58,  note:'ETF — memory complex'},
-  {t:'NOK',   name:'Nokia',                  price:10.21,   prev:10.15,  note:'Telecom networks / RAN'},
-  {t:'NVTS',  name:'Navitas Semiconductor',  price:12.97,   prev:12.97,  note:'GaN & SiC power semis'},
-  {t:'NOW',   name:'ServiceNow',             price:128.48,   prev:129.75,    note:'Enterprise AI software'}
+  {t:'AMKR', name:'Amkor Technology',        price:47.88,   prev:51.74,  note:'OSAT / advanced packaging'},
+  {t:'APLD', name:'Applied Digital',         price:25.34,  prev:27.44,  note:'AI datacenter REIT-alike'},
+  {t:'AMPX', name:'Amprius Technologies',    price:9.89,  prev:10.51,  note:'Silicon-anode batteries'},
+  {t:'BE',   name:'Bloom Energy',            price:210.77, prev:217.83, note:'Fuel cells / DC power'},
+  {t:'COHR', name:'Coherent Corp',           price:279.2,  prev:295.39, note:'Optics / transceivers'},
+  {t:'CRDO', name:'Credo Technology',        price:232.75,  prev:240.24, note:'AEC / connectivity'},
+  {t:'GLW',  name:'Corning',                 price:148.98,  prev:152.8, note:'Optical fiber / glass'},
+  {t:'NVDA', name:'NVIDIA',                  price:217.55,  prev:227.98, note:'AI accelerators'},
+  {t:'SPCX', name:'SpaceX (+xAI)',           price:141.5,  prev:140.87, note:'Space + AI — IPO 6/12/26'},
+  {t:'IREN', name:'IREN Limited',            price:35.45,  prev:40.53,  note:'AI cloud / datacenters'},
+  {t:'NBIS', name:'Nebius Group',            price:209.18,  prev:218.48, note:'AI cloud infrastructure'},
+  {t:'MRVL', name:'Marvell Technology',      price:216.62,  prev:241.45, note:'Custom silicon / optics'},
+  {t:'DRAM', name:'Roundhill Memory ETF',    price:55.83,  prev:56.83,  note:'ETF — memory complex'},
+  {t:'NOK',   name:'Nokia',                  price:10.21,   prev:10.59,  note:'Telecom networks / RAN'},
+  {t:'NVTS',  name:'Navitas Semiconductor',  price:11.49,   prev:12.51,  note:'GaN & SiC power semis'},
+  {t:'NOW',   name:'ServiceNow',             price:144.71,   prev:138.43,    note:'Enterprise AI software'}
 ];
 
 const CATS = {
@@ -275,16 +275,16 @@ const EVENTS = [
 {d:'2026-08-26', t:'NVDA', c:'dividend', tier:3, s:'E', title:'Q2 FY27 dividend declaration expected ($0.25)',
  desc:'Dividend was raised 25x from $0.01 to $0.25/qtr on 2026-05-20, alongside an added $80B buyback authorization.',
  src:'https://stockanalysis.com/stocks/nvda/dividend/'},
-{d:'2026-09-10', t:'NVDA', c:'dividend', tier:3, s:'E', title:'Ex-dividend date ($0.25)',
+{d:'2026-09-10', t:'NVDA', c:'dividend', tier:3, s:'C', title:'Ex-dividend date ($0.25)',
  desc:'Forecast ex-date; pay date ~2026-10-01. Not yet declared.', src:'https://www.dividendmax.com/united-states/nasdaq/technology-hardware-and-equipment/nvidia-corp/dividends'},
-{d:'2026-10-01', t:'NVDA', c:'dividend', tier:3, s:'E', title:'Dividend pay date ($0.25)', desc:'Forecast payment date for the Q2 FY27 quarterly dividend.', src:'https://stockanalysis.com/stocks/nvda/dividend/'},
+{d:'2026-10-01', t:'NVDA', c:'dividend', tier:3, s:'C', title:'Dividend pay date ($0.25)', desc:'Forecast payment date for the Q2 FY27 quarterly dividend.', src:'https://stockanalysis.com/stocks/nvda/dividend/'},
 {d:'2026-10-01', d2:'2026-12-31', t:'NVDA', c:'product', tier:1, s:'C', title:'Vera Rubin volume ramp (Q4 CY2026)',
  desc:'Blackwell Ultra is still the shipping revenue generation. Initial Rubin units began Q3 CY26; Huang guided volume ramp to Q4. All three HBM4 suppliers qualified June 2026; NVDA holds >50% of TSMC CoWoS through 2027 — supply de-risked, execution dated only at quarter level.',
  src:'https://nvidianews.nvidia.com/news/vera-rubin-full-production-agentic-ai-factory'},
 {d:'2026-10-21', t:'NVDA', c:'conf', tier:1, s:'C', title:'GTC Berlin — Jensen Huang keynote',
  desc:'Workshops Oct 20, conference Oct 21–22 at STATION-Berlin; keynote 11:00–13:00 CEST at Tempodrom. This is the ONLY NVIDIA-owned keynote before year-end — verified that no GTC Washington DC 2026 exists.',
  src:'https://www.nvidia.com/en-eu/gtc/'},
-{d:'2026-11-18', t:'NVDA', c:'earnings', tier:1, s:'E', title:'Q3 FY2027 earnings — AMC (expected)',
+{d:'2026-11-17', t:'NVDA', c:'earnings', tier:1, s:'C', title:'Q3 FY2027 earnings — AMC (expected)',
  desc:'Inferred from historical pattern; NVIDIA typically confirms ~4 weeks prior (late Oct). Q3 FY27 quarter ends ~2026-10-25.',
  src:'https://www.wallstreethorizon.com/nvidia-earnings-calendar'},
 {d:'2026-11-30', t:'NVDA', c:'macro', tier:2, s:'E', title:'China rare-earth export-control suspension expires',
@@ -315,7 +315,7 @@ const EVENTS = [
 {d:'2026-09-30', t:'COHR', c:'supply', tier:2, s:'C', title:'Indium phosphide 6-inch output doubling completes',
  desc:'Management said InP output doubles by end of the September quarter — one quarter ahead of the original plan. Confirmation expected on the FQ1 call.',
  src:'https://futurumgroup.com/insights/coherent-q4-fy-2026-earnings-1-6t-transceivers-ramp-cpo-revenue-approaches/'},
-{d:'2026-11-04', t:'COHR', c:'earnings', tier:1, s:'E', title:'FQ1 FY2027 earnings — AMC (expected, range Nov 4–11)',
+{d:'2026-11-04', t:'COHR', c:'earnings', tier:1, s:'C', title:'FQ1 FY2027 earnings — AMC (expected, range Nov 4–11)',
  desc:'Guide: revenue $2.2–2.4B, non-GAAP GM 39.5–41.5%, non-GAAP EPS $1.85–2.05. Management said 1.6T customer adoption is running ahead of the guide given three months earlier. Target: first >$3B revenue quarter by end of FY27.',
  src:'https://www.tipranks.com/stocks/cohr/earnings'},
 {d:'2026-12-01', d2:'2026-12-31', t:'COHR', c:'product', tier:1, s:'C', title:'First co-packaged optics (CPO) revenue — Dec quarter',
@@ -390,7 +390,7 @@ const EVENTS = [
  src:'https://mms.businesswire.com/media/20260812963359/en/2874372/1/SHLQ226.pdf'},
 
 // ─────────────── APLD ───────────────
-{d:'2026-10-08', t:'APLD', c:'earnings', tier:1, s:'E', title:'FQ1 FY2027 earnings — AMC (expected)',
+{d:'2026-10-08', t:'APLD', c:'earnings', tier:1, s:'C', title:'FQ1 FY2027 earnings — AMC (expected)',
  desc:'Quarter ending 2026-08-31; first "pure-play datacenter" quarter post-ChronoScale separation. FQ1 FY26 was 2025-10-09. Confirming PR historically drops ~12 days prior. The ONLY scheduled catalyst for APLD in the window.',
  src:'https://marketchameleon.com/Overview/APLD/Earnings/Earnings-Dates/'},
 {d:'2026-08-17', d2:'2026-12-31', t:'APLD', c:'supply', tier:1, s:'E', title:'Next hyperscaler AI-factory lease — unscheduled',
@@ -423,7 +423,7 @@ const EVENTS = [
 {d:'2026-09-01', d2:'2026-12-25', t:'AMPX', c:'product', tier:1, s:'E', title:'New SiCore/SiMaxx cell announcements "between now and Christmas"',
  desc:'CEO Tom Stepien and the CFO said at the Canaccord Genuity conference (2026-08-11) to expect new cell announcements before Christmas, with improvements in energy density, power and cycle life. Management-guided, no fixed date.',
  src:'https://www.investing.com/news/transcripts/amprius-at-canaccord-genuity-conference-growth-built-on-silicon-edge-93CH-4852030'},
-{d:'2026-11-05', t:'AMPX', c:'earnings', tier:1, s:'E', title:'Q3 2026 earnings — AMC (expected)',
+{d:'2026-11-05', t:'AMPX', c:'earnings', tier:1, s:'C', title:'Q3 2026 earnings — AMC (expected)',
  desc:'Q2 revenue was $34.0M (+126% y/y) at 27% GM. FY26 guidance raised 2026-08-04 to ≥$140M revenue, ≥28% GM, ≥$4.0M adjusted EBITDA. Watch the balance sheet — cash fell to $74.5M at 6/30 from $90.5M at YE25, making an equity raise the most plausible unscheduled negative.',
  src:'https://ir.amprius.com/financial-information/financial-results'},
 {d:'2026-08-17', d2:'2026-12-31', t:'AMPX', c:'supply', tier:2, s:'E', title:'Additional defense/drone orders — unscheduled',
@@ -551,12 +551,12 @@ const EVENTS = [
  src:'https://www.nokia.com/about-us/investors/'},
 
 // ─────────────── NVTS ───────────────
-{d:'2026-11-03', t:'NVTS', c:'earnings', tier:1, s:'E', title:'Q3 2026 earnings — AMC (expected)',
+{d:'2026-11-02', t:'NVTS', c:'earnings', tier:1, s:'E', title:'Q3 2026 earnings — AMC (expected)',
  desc:'Date not yet announced. Estimated from prior-year timing; the most recent confirmed print was Q2 on 2026-07-27. A small float makes the reaction outsized relative to the market cap.',
  src:'https://finance.yahoo.com/quote/NVTS/'},
 
 // ─────────────── NOW ───────────────
-{d:'2026-10-28', t:'NOW', c:'earnings', tier:1, s:'E', title:'Q3 2026 earnings — AMC (expected)',
+{d:'2026-10-28', t:'NOW', c:'earnings', tier:1, s:'C', title:'Q3 2026 earnings — AMC (expected)',
  desc:'Not yet confirmed by the company — Yahoo carries the date as an estimate. Subscription revenue and cRPO guidance are the numbers that move it; the print lands the same afternoon as the October FOMC decision.',
  src:'https://investors.servicenow.com/'}
 ];
@@ -565,8 +565,8 @@ const EVENTS = [
 /* Refreshed weekly by scripts/update-calendar.mjs — edit by hand only if the
    updater is off. Everything between the AUTO markers is machine-managed. */
 /* <<<AUTO:META>>> */
-const PRICED = '2026-08-21';   // as-of date for the POSITIONS prices below
-const UPDATED = '2026-08-23';  // last successful automated refresh
+const PRICED = '2026-08-28';   // as-of date for the POSITIONS prices below
+const UPDATED = '2026-08-30';  // last successful automated refresh
 /* <<<END:META>>> */
 
 const START = new Date('2026-08-17T00:00:00');
