@@ -237,22 +237,22 @@ td.d{font-variant-numeric:tabular-nums; white-space:nowrap; color:var(--text-sec
 // tier: 1 = major mover, 2 = standard, 3 = context
 
 const POSITIONS = [
-  {t:'AMKR', name:'Amkor Technology',        price:47.88,   prev:51.74,  note:'OSAT / advanced packaging'},
-  {t:'APLD', name:'Applied Digital',         price:25.34,  prev:27.44,  note:'AI datacenter REIT-alike'},
-  {t:'AMPX', name:'Amprius Technologies',    price:9.89,  prev:10.51,  note:'Silicon-anode batteries'},
-  {t:'BE',   name:'Bloom Energy',            price:210.77, prev:217.83, note:'Fuel cells / DC power'},
-  {t:'COHR', name:'Coherent Corp',           price:279.2,  prev:295.39, note:'Optics / transceivers'},
-  {t:'CRDO', name:'Credo Technology',        price:232.75,  prev:240.24, note:'AEC / connectivity'},
-  {t:'GLW',  name:'Corning',                 price:148.98,  prev:152.8, note:'Optical fiber / glass'},
-  {t:'NVDA', name:'NVIDIA',                  price:217.55,  prev:227.98, note:'AI accelerators'},
-  {t:'SPCX', name:'SpaceX (+xAI)',           price:141.5,  prev:140.87, note:'Space + AI — IPO 6/12/26'},
-  {t:'IREN', name:'IREN Limited',            price:35.45,  prev:40.53,  note:'AI cloud / datacenters'},
-  {t:'NBIS', name:'Nebius Group',            price:209.18,  prev:218.48, note:'AI cloud infrastructure'},
-  {t:'MRVL', name:'Marvell Technology',      price:216.62,  prev:241.45, note:'Custom silicon / optics'},
-  {t:'DRAM', name:'Roundhill Memory ETF',    price:55.83,  prev:56.83,  note:'ETF — memory complex'},
-  {t:'NOK',   name:'Nokia',                  price:10.21,   prev:10.59,  note:'Telecom networks / RAN'},
-  {t:'NVTS',  name:'Navitas Semiconductor',  price:11.49,   prev:12.51,  note:'GaN & SiC power semis'},
-  {t:'NOW',   name:'ServiceNow',             price:144.71,   prev:138.43,    note:'Enterprise AI software'}
+  {t:'AMKR', name:'Amkor Technology',        price:47.77,   prev:46.94,  note:'OSAT / advanced packaging'},
+  {t:'APLD', name:'Applied Digital',         price:26.37,  prev:25.91,  note:'AI datacenter REIT-alike'},
+  {t:'AMPX', name:'Amprius Technologies',    price:9.89,  prev:9.63,  note:'Silicon-anode batteries'},
+  {t:'BE',   name:'Bloom Energy',            price:252.87, prev:235.55, note:'Fuel cells / DC power'},
+  {t:'COHR', name:'Coherent Corp',           price:281.86,  prev:264.41, note:'Optics / transceivers'},
+  {t:'CRDO', name:'Credo Technology',        price:170.57,  prev:164.17, note:'AEC / connectivity'},
+  {t:'GLW',  name:'Corning',                 price:154.3,  prev:146, note:'Optical fiber / glass'},
+  {t:'NVDA', name:'NVIDIA',                  price:230.36,  prev:228.45, note:'AI accelerators'},
+  {t:'SPCX', name:'SpaceX (+xAI)',           price:147.95,  prev:149.74, note:'Space + AI — IPO 6/12/26'},
+  {t:'IREN', name:'IREN Limited',            price:44.68,  prev:41.65,  note:'AI cloud / datacenters'},
+  {t:'NBIS', name:'Nebius Group',            price:226.39,  prev:210.63, note:'AI cloud infrastructure'},
+  {t:'MRVL', name:'Marvell Technology',      price:223.55,  prev:208.83, note:'Custom silicon / optics'},
+  {t:'DRAM', name:'Roundhill Memory ETF',    price:59.69,  prev:55.99,  note:'ETF — memory complex'},
+  {t:'NOK',   name:'Nokia',                  price:10.03,   prev:9.77,  note:'Telecom networks / RAN'},
+  {t:'NVTS',  name:'Navitas Semiconductor',  price:11.8,   prev:11.1,  note:'GaN & SiC power semis'},
+  {t:'NOW',   name:'ServiceNow',             price:141.26,   prev:145.59,    note:'Enterprise AI software'}
 ];
 
 const CATS = {
@@ -304,7 +304,7 @@ const EVENTS = [
  src:'https://investor.marvell.com/news-events/ir-calendar'},
 {d:'2026-10-09', t:'MRVL', c:'dividend', tier:3, s:'E', title:'Ex-dividend date ($0.06)', desc:'Pattern-derived from Jan 9 / Apr 10 / Jul 10 2026 ex-dates.', src:'https://dividendhistory.net/mrvl-dividend-yield'},
 {d:'2026-10-29', t:'MRVL', c:'dividend', tier:3, s:'E', title:'Dividend pay date ($0.06)', desc:'Based on 2025 pattern (paid 2025-10-30).', src:'https://dividendhistory.net/mrvl-dividend-yield'},
-{d:'2026-12-02', t:'MRVL', c:'earnings', tier:1, s:'E', title:'Q3 FY2027 earnings — AMC (expected)',
+{d:'2026-12-01', t:'MRVL', c:'earnings', tier:1, s:'E', title:'Q3 FY2027 earnings — AMC (expected)',
  desc:'Historical comps 2025-12-02 and 2024-12-03, both Tuesdays. Last earnings event of calendar 2026. New CFO\'s first full guidance cycle.',
  src:'https://www.investing.com/equities/marvell-technology-group-ltd-earnings'},
 
@@ -357,7 +357,7 @@ const EVENTS = [
 {d:'2026-10-12', d2:'2026-10-15', t:'CRDO', c:'conf', tier:2, s:'C', title:'OCP Global Summit — OmniConnect contribution',
  desc:'Credo announced 2026-08-10 it will contribute its OmniConnect scale-in interconnect to the Open Compute Project, targeting the AI-inference memory wall and "reduced dependence on costly, capacity-constrained HBM." The Summit is the natural venue for the standardization reveal.',
  src:'https://www.opencompute.org/summit/global-summit'},
-{d:'2026-12-01', t:'CRDO', c:'earnings', tier:1, s:'E', title:'Q2 FY2027 earnings (expected)',
+{d:'2026-11-30', t:'CRDO', c:'earnings', tier:1, s:'E', title:'Q2 FY2027 earnings (expected)',
  desc:'Q2 FY26 was reported 2026-12-01. Second and final CRDO print in the window. Net cash, no convertible debt, only ~3.6% short float — the risk here is a guidance/margin miss, not a positioning unwind.',
  src:'https://www.tipranks.com/stocks/crdo/earnings'},
 {d:'2026-12-11', t:'CRDO', c:'index', tier:2, s:'E', title:'Nasdaq-100 annual reconstitution — CRDO a credible add',
@@ -565,8 +565,8 @@ const EVENTS = [
 /* Refreshed weekly by scripts/update-calendar.mjs — edit by hand only if the
    updater is off. Everything between the AUTO markers is machine-managed. */
 /* <<<AUTO:META>>> */
-const PRICED = '2026-08-28';   // as-of date for the POSITIONS prices below
-const UPDATED = '2026-08-30';  // last successful automated refresh
+const PRICED = '2026-09-04';   // as-of date for the POSITIONS prices below
+const UPDATED = '2026-09-06';  // last successful automated refresh
 /* <<<END:META>>> */
 
 const START = new Date('2026-08-17T00:00:00');
