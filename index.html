@@ -237,22 +237,22 @@ td.d{font-variant-numeric:tabular-nums; white-space:nowrap; color:var(--text-sec
 // tier: 1 = major mover, 2 = standard, 3 = context
 
 const POSITIONS = [
-  {t:'AMKR', name:'Amkor Technology',        price:53.61,   prev:52.69,  note:'OSAT / advanced packaging'},
-  {t:'APLD', name:'Applied Digital',         price:26.25,  prev:27.06,  note:'AI datacenter REIT-alike'},
-  {t:'AMPX', name:'Amprius Technologies',    price:9.75,  prev:9.69,  note:'Silicon-anode batteries'},
-  {t:'BE',   name:'Bloom Energy',            price:288.7, prev:266.65, note:'Fuel cells / DC power'},
-  {t:'COHR', name:'Coherent Corp',           price:295.83,  prev:290.61, note:'Optics / transceivers'},
-  {t:'CRDO', name:'Credo Technology',        price:210.97,  prev:195.97, note:'AEC / connectivity'},
-  {t:'GLW',  name:'Corning',                 price:156.74,  prev:154.15, note:'Optical fiber / glass'},
-  {t:'NVDA', name:'NVIDIA',                  price:225.07,  prev:224.58, note:'AI accelerators'},
-  {t:'SPCX', name:'SpaceX (+xAI)',           price:148.68,  prev:148.03, note:'Space + AI — IPO 6/12/26'},
-  {t:'IREN', name:'IREN Limited',            price:44.125,  prev:46.15,  note:'AI cloud / datacenters'},
-  {t:'NBIS', name:'Nebius Group',            price:237.33,  prev:243.48, note:'AI cloud infrastructure'},
-  {t:'MRVL', name:'Marvell Technology',      price:261.935,  prev:258.95, note:'Custom silicon / optics'},
-  {t:'DRAM', name:'Roundhill Memory ETF',    price:61.91,  prev:60.72,  note:'ETF — memory complex'},
-  {t:'NOK',   name:'Nokia',                  price:10.39,   prev:10.43,  note:'Telecom networks / RAN'},
-  {t:'NVTS',  name:'Navitas Semiconductor',  price:12.2,   prev:11.84,  note:'GaN & SiC power semis'},
-  {t:'NOW',   name:'ServiceNow',             price:135.62,   prev:137.78,    note:'Enterprise AI software'}
+  {t:'AMKR', name:'Amkor Technology',        price:56.02,   prev:52.9,  note:'OSAT / advanced packaging'},
+  {t:'APLD', name:'Applied Digital',         price:25.38,  prev:24.16,  note:'AI datacenter REIT-alike'},
+  {t:'AMPX', name:'Amprius Technologies',    price:9.67,  prev:9.61,  note:'Silicon-anode batteries'},
+  {t:'BE',   name:'Bloom Energy',            price:289.15, prev:277.58, note:'Fuel cells / DC power'},
+  {t:'COHR', name:'Coherent Corp',           price:337.04,  prev:319.19, note:'Optics / transceivers'},
+  {t:'CRDO', name:'Credo Technology',        price:218.64,  prev:210.17, note:'AEC / connectivity'},
+  {t:'GLW',  name:'Corning',                 price:164.19,  prev:160.42, note:'Optical fiber / glass'},
+  {t:'NVDA', name:'NVIDIA',                  price:233.95,  prev:230.86, note:'AI accelerators'},
+  {t:'SPCX', name:'SpaceX (+xAI)',           price:158.96,  prev:148.07, note:'Space + AI — IPO 6/12/26'},
+  {t:'IREN', name:'IREN Limited',            price:41.76,  prev:40.65,  note:'AI cloud / datacenters'},
+  {t:'NBIS', name:'Nebius Group',            price:242.81,  prev:232.28, note:'AI cloud infrastructure'},
+  {t:'MRVL', name:'Marvell Technology',      price:272.29,  prev:268.08, note:'Custom silicon / optics'},
+  {t:'DRAM', name:'Roundhill Memory ETF',    price:61.78,  prev:62.03,  note:'ETF — memory complex'},
+  {t:'NOK',   name:'Nokia',                  price:10.6,   prev:10.37,  note:'Telecom networks / RAN'},
+  {t:'NVTS',  name:'Navitas Semiconductor',  price:12.4,   prev:12.12,  note:'GaN & SiC power semis'},
+  {t:'NOW',   name:'ServiceNow',             price:134.38,   prev:137.76,    note:'Enterprise AI software'}
 ];
 
 const CATS = {
@@ -302,8 +302,8 @@ const EVENTS = [
 {d:'2026-10-06', t:'MRVL', c:'conf', tier:1, s:'C', title:'Marvell Investor Day 2026 — New York City',
  desc:'Morning session, in-person by invitation, live webcast. Expect an updated custom-silicon / AI TAM and long-term financial model — the first investor day with Celestial AI and XConn inside the portfolio, and the largest scheduled catalyst of the year for MRVL.',
  src:'https://investor.marvell.com/news-events/ir-calendar'},
-{d:'2026-10-09', t:'MRVL', c:'dividend', tier:3, s:'E', title:'Ex-dividend date ($0.06)', desc:'Pattern-derived from Jan 9 / Apr 10 / Jul 10 2026 ex-dates.', src:'https://dividendhistory.net/mrvl-dividend-yield'},
-{d:'2026-10-29', t:'MRVL', c:'dividend', tier:3, s:'E', title:'Dividend pay date ($0.06)', desc:'Based on 2025 pattern (paid 2025-10-30).', src:'https://dividendhistory.net/mrvl-dividend-yield'},
+{d:'2026-10-09', t:'MRVL', c:'dividend', tier:3, s:'C', title:'Ex-dividend date ($0.06)', desc:'Pattern-derived from Jan 9 / Apr 10 / Jul 10 2026 ex-dates.', src:'https://dividendhistory.net/mrvl-dividend-yield'},
+{d:'2026-10-29', t:'MRVL', c:'dividend', tier:3, s:'C', title:'Dividend pay date ($0.06)', desc:'Based on 2025 pattern (paid 2025-10-30).', src:'https://dividendhistory.net/mrvl-dividend-yield'},
 {d:'2026-12-01', t:'MRVL', c:'earnings', tier:1, s:'E', title:'Q3 FY2027 earnings — AMC (expected)',
  desc:'Historical comps 2025-12-02 and 2024-12-03, both Tuesdays. Last earnings event of calendar 2026. New CFO\'s first full guidance cycle.',
  src:'https://www.investing.com/equities/marvell-technology-group-ltd-earnings'},
@@ -330,7 +330,7 @@ const EVENTS = [
 {d:'2026-10-09', t:'GLW', c:'dividend', tier:3, s:'E', title:'Q4 dividend declaration — possible first raise',
  desc:'Board declaration for the December payment. $0.28 has been held flat through 2025 and all of 2026 to date, so a raise here would be the first in that span.',
  src:'https://stockanalysis.com/stocks/glw/dividend/'},
-{d:'2026-10-27', t:'GLW', c:'earnings', tier:1, s:'E', title:'Q3 2026 earnings — BMO (expected, range Oct 27–Nov 3)',
+{d:'2026-10-27', t:'GLW', c:'earnings', tier:1, s:'C', title:'Q3 2026 earnings — BMO (expected, range Oct 27–Nov 3)',
  desc:'Guide: sales $4.9–5.0B (~+16% y/y), core EPS $0.85–0.89 (~+28% y/y). The stock fell 12–18% off the July 28 print despite a beat, so this is a two-sided re-rating event.',
  src:'https://marketchameleon.com/Overview/GLW/Earnings/Earnings-Dates/'},
 {d:'2026-11-13', t:'GLW', c:'dividend', tier:3, s:'E', title:'Q4 ex-dividend / record date', desc:'Based on 2025 pattern (ex 2025-11-14).', src:'https://stockanalysis.com/stocks/glw/dividend/'},
@@ -390,7 +390,7 @@ const EVENTS = [
  src:'https://mms.businesswire.com/media/20260812963359/en/2874372/1/SHLQ226.pdf'},
 
 // ─────────────── APLD ───────────────
-{d:'2026-10-08', t:'APLD', c:'earnings', tier:1, s:'C', title:'FQ1 FY2027 earnings — AMC (expected)',
+{d:'2026-10-07', t:'APLD', c:'earnings', tier:1, s:'C', title:'FQ1 FY2027 earnings — AMC (expected)',
  desc:'Quarter ending 2026-08-31; first "pure-play datacenter" quarter post-ChronoScale separation. FQ1 FY26 was 2025-10-09. Confirming PR historically drops ~12 days prior. The ONLY scheduled catalyst for APLD in the window.',
  src:'https://marketchameleon.com/Overview/APLD/Earnings/Earnings-Dates/'},
 {d:'2026-08-17', d2:'2026-12-31', t:'APLD', c:'supply', tier:1, s:'E', title:'Next hyperscaler AI-factory lease — unscheduled',
@@ -565,8 +565,8 @@ const EVENTS = [
 /* Refreshed weekly by scripts/update-calendar.mjs — edit by hand only if the
    updater is off. Everything between the AUTO markers is machine-managed. */
 /* <<<AUTO:META>>> */
-const PRICED = '2026-09-25';   // as-of date for the POSITIONS prices below
-const UPDATED = '2026-09-27';  // last successful automated refresh
+const PRICED = '2026-10-02';   // as-of date for the POSITIONS prices below
+const UPDATED = '2026-10-04';  // last successful automated refresh
 /* <<<END:META>>> */
 
 const START = new Date('2026-08-17T00:00:00');
