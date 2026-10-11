@@ -237,22 +237,22 @@ td.d{font-variant-numeric:tabular-nums; white-space:nowrap; color:var(--text-sec
 // tier: 1 = major mover, 2 = standard, 3 = context
 
 const POSITIONS = [
-  {t:'AMKR', name:'Amkor Technology',        price:56.02,   prev:52.9,  note:'OSAT / advanced packaging'},
-  {t:'APLD', name:'Applied Digital',         price:25.38,  prev:24.16,  note:'AI datacenter REIT-alike'},
-  {t:'AMPX', name:'Amprius Technologies',    price:9.67,  prev:9.61,  note:'Silicon-anode batteries'},
-  {t:'BE',   name:'Bloom Energy',            price:289.15, prev:277.58, note:'Fuel cells / DC power'},
-  {t:'COHR', name:'Coherent Corp',           price:337.04,  prev:319.19, note:'Optics / transceivers'},
-  {t:'CRDO', name:'Credo Technology',        price:218.64,  prev:210.17, note:'AEC / connectivity'},
-  {t:'GLW',  name:'Corning',                 price:164.19,  prev:160.42, note:'Optical fiber / glass'},
-  {t:'NVDA', name:'NVIDIA',                  price:233.95,  prev:230.86, note:'AI accelerators'},
-  {t:'SPCX', name:'SpaceX (+xAI)',           price:158.96,  prev:148.07, note:'Space + AI — IPO 6/12/26'},
-  {t:'IREN', name:'IREN Limited',            price:41.76,  prev:40.65,  note:'AI cloud / datacenters'},
-  {t:'NBIS', name:'Nebius Group',            price:242.81,  prev:232.28, note:'AI cloud infrastructure'},
-  {t:'MRVL', name:'Marvell Technology',      price:272.29,  prev:268.08, note:'Custom silicon / optics'},
-  {t:'DRAM', name:'Roundhill Memory ETF',    price:61.78,  prev:62.03,  note:'ETF — memory complex'},
-  {t:'NOK',   name:'Nokia',                  price:10.6,   prev:10.37,  note:'Telecom networks / RAN'},
-  {t:'NVTS',  name:'Navitas Semiconductor',  price:12.4,   prev:12.12,  note:'GaN & SiC power semis'},
-  {t:'NOW',   name:'ServiceNow',             price:134.38,   prev:137.76,    note:'Enterprise AI software'}
+  {t:'AMKR', name:'Amkor Technology',        price:49.12,   prev:51,  note:'OSAT / advanced packaging'},
+  {t:'APLD', name:'Applied Digital',         price:23.68,  prev:23.85,  note:'AI datacenter REIT-alike'},
+  {t:'AMPX', name:'Amprius Technologies',    price:9.44,  prev:9.39,  note:'Silicon-anode batteries'},
+  {t:'BE',   name:'Bloom Energy',            price:280.5, prev:272.82, note:'Fuel cells / DC power'},
+  {t:'COHR', name:'Coherent Corp',           price:312.62,  prev:302.35, note:'Optics / transceivers'},
+  {t:'CRDO', name:'Credo Technology',        price:216.55,  prev:211.86, note:'AEC / connectivity'},
+  {t:'GLW',  name:'Corning',                 price:156.68,  prev:152.83, note:'Optical fiber / glass'},
+  {t:'NVDA', name:'NVIDIA',                  price:229.28,  prev:230.48, note:'AI accelerators'},
+  {t:'SPCX', name:'SpaceX (+xAI)',           price:162.57,  prev:160.57, note:'Space + AI — IPO 6/12/26'},
+  {t:'IREN', name:'IREN Limited',            price:35.19,  prev:35.71,  note:'AI cloud / datacenters'},
+  {t:'NBIS', name:'Nebius Group',            price:221.07,  prev:219.71, note:'AI cloud infrastructure'},
+  {t:'MRVL', name:'Marvell Technology',      price:275.28,  prev:274.6, note:'Custom silicon / optics'},
+  {t:'DRAM', name:'Roundhill Memory ETF',    price:57.19,  prev:56.93,  note:'ETF — memory complex'},
+  {t:'NOK',   name:'Nokia',                  price:10.36,   prev:10.14,  note:'Telecom networks / RAN'},
+  {t:'NVTS',  name:'Navitas Semiconductor',  price:10.78,   prev:10.93,  note:'GaN & SiC power semis'},
+  {t:'NOW',   name:'ServiceNow',             price:140.86,   prev:139.75,    note:'Enterprise AI software'}
 ];
 
 const CATS = {
@@ -333,8 +333,8 @@ const EVENTS = [
 {d:'2026-10-27', t:'GLW', c:'earnings', tier:1, s:'C', title:'Q3 2026 earnings — BMO (expected, range Oct 27–Nov 3)',
  desc:'Guide: sales $4.9–5.0B (~+16% y/y), core EPS $0.85–0.89 (~+28% y/y). The stock fell 12–18% off the July 28 print despite a beat, so this is a two-sided re-rating event.',
  src:'https://marketchameleon.com/Overview/GLW/Earnings/Earnings-Dates/'},
-{d:'2026-11-13', t:'GLW', c:'dividend', tier:3, s:'E', title:'Q4 ex-dividend / record date', desc:'Based on 2025 pattern (ex 2025-11-14).', src:'https://stockanalysis.com/stocks/glw/dividend/'},
-{d:'2026-12-11', t:'GLW', c:'dividend', tier:3, s:'E', title:'Q4 dividend pay date', desc:'Based on 2025 pattern (paid 2025-12-12).', src:'https://stockanalysis.com/stocks/glw/dividend/'},
+{d:'2026-11-13', t:'GLW', c:'dividend', tier:3, s:'C', title:'Q4 ex-dividend / record date', desc:'Based on 2025 pattern (ex 2025-11-14).', src:'https://stockanalysis.com/stocks/glw/dividend/'},
+{d:'2026-12-11', t:'GLW', c:'dividend', tier:3, s:'C', title:'Q4 dividend pay date', desc:'Based on 2025 pattern (paid 2025-12-12).', src:'https://stockanalysis.com/stocks/glw/dividend/'},
 {d:'2026-12-31', t:'GLW', c:'supply', tier:2, s:'C', title:'Springboard milestone — $20B annualized sales run rate',
  desc:'Hard, company-set, dated target reaffirmed at the May-2026 investor event and the Q2 call. Q4 exit run rate is the measuring stick; progress commentary at the Q3 print, verification at the Q4 print in late Jan 2027.',
  src:'https://investor.corning.com/news-and-events/news/news-details/2026/Corning-Upgrades-and-Extends-Springboard-Plan-Outlines-New-Phase-of-Accelerating-Growth/default.aspx'},
@@ -342,7 +342,7 @@ const EVENTS = [
 // ─────────────── AMKR ───────────────
 {d:'2026-09-02', t:'AMKR', c:'dividend', tier:3, s:'C', title:'Ex-dividend / record date ($0.08352)', desc:'Declared 2026-08-12. Ex-date and record date both 2026-09-02.', src:'https://ir.amkor.com/stock-information/dividends-splits'},
 {d:'2026-09-22', t:'AMKR', c:'dividend', tier:3, s:'C', title:'Dividend pay date ($0.08352)', desc:'Paid 2026-09-22. ~0.3% yield — immaterial in size.', src:'https://www.businesswire.com/news/home/20260812257497/en/Amkor-Technology-Declares-Quarterly-Dividend'},
-{d:'2026-10-26', t:'AMKR', c:'earnings', tier:1, s:'E', title:'Q3 2026 earnings — AMC (expected, range Oct 26–Nov 2)',
+{d:'2026-10-26', t:'AMKR', c:'earnings', tier:1, s:'C', title:'Q3 2026 earnings — AMC (expected, range Oct 26–Nov 2)',
  desc:'Guide: net sales $1.95–2.05B, GM 18.5–19.5%, EPS $0.72–0.82; FY26 capex $2.5–3.0B. Measured against the May-2026 Investor Day 2030 model of $11B+ revenue / 22%+ GM / $5.00+ EPS. Anchor deals: TSMC 10-year Arizona agreement (June) and NVIDIA $1.5B partnership (July).',
  src:'https://www.tipranks.com/stocks/amkr/earnings'},
 {d:'2026-11-12', t:'AMKR', c:'dividend', tier:3, s:'E', title:'Q4 dividend declaration — historical raise spot',
@@ -565,8 +565,8 @@ const EVENTS = [
 /* Refreshed weekly by scripts/update-calendar.mjs — edit by hand only if the
    updater is off. Everything between the AUTO markers is machine-managed. */
 /* <<<AUTO:META>>> */
-const PRICED = '2026-10-02';   // as-of date for the POSITIONS prices below
-const UPDATED = '2026-10-04';  // last successful automated refresh
+const PRICED = '2026-10-09';   // as-of date for the POSITIONS prices below
+const UPDATED = '2026-10-11';  // last successful automated refresh
 /* <<<END:META>>> */
 
 const START = new Date('2026-08-17T00:00:00');
