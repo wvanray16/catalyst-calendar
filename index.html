@@ -237,22 +237,22 @@ td.d{font-variant-numeric:tabular-nums; white-space:nowrap; color:var(--text-sec
 // tier: 1 = major mover, 2 = standard, 3 = context
 
 const POSITIONS = [
-  {t:'AMKR', name:'Amkor Technology',        price:49.12,   prev:51,  note:'OSAT / advanced packaging'},
-  {t:'APLD', name:'Applied Digital',         price:23.68,  prev:23.85,  note:'AI datacenter REIT-alike'},
-  {t:'AMPX', name:'Amprius Technologies',    price:9.44,  prev:9.39,  note:'Silicon-anode batteries'},
-  {t:'BE',   name:'Bloom Energy',            price:280.5, prev:272.82, note:'Fuel cells / DC power'},
-  {t:'COHR', name:'Coherent Corp',           price:312.62,  prev:302.35, note:'Optics / transceivers'},
-  {t:'CRDO', name:'Credo Technology',        price:216.55,  prev:211.86, note:'AEC / connectivity'},
-  {t:'GLW',  name:'Corning',                 price:156.68,  prev:152.83, note:'Optical fiber / glass'},
-  {t:'NVDA', name:'NVIDIA',                  price:229.28,  prev:230.48, note:'AI accelerators'},
-  {t:'SPCX', name:'SpaceX (+xAI)',           price:162.57,  prev:160.57, note:'Space + AI — IPO 6/12/26'},
-  {t:'IREN', name:'IREN Limited',            price:35.19,  prev:35.71,  note:'AI cloud / datacenters'},
-  {t:'NBIS', name:'Nebius Group',            price:221.07,  prev:219.71, note:'AI cloud infrastructure'},
-  {t:'MRVL', name:'Marvell Technology',      price:275.28,  prev:274.6, note:'Custom silicon / optics'},
-  {t:'DRAM', name:'Roundhill Memory ETF',    price:57.19,  prev:56.93,  note:'ETF — memory complex'},
-  {t:'NOK',   name:'Nokia',                  price:10.36,   prev:10.14,  note:'Telecom networks / RAN'},
-  {t:'NVTS',  name:'Navitas Semiconductor',  price:10.78,   prev:10.93,  note:'GaN & SiC power semis'},
-  {t:'NOW',   name:'ServiceNow',             price:140.86,   prev:139.75,    note:'Enterprise AI software'}
+  {t:'AMKR', name:'Amkor Technology',        price:41.82,   prev:44.05,  note:'OSAT / advanced packaging'},
+  {t:'APLD', name:'Applied Digital',         price:18.05,  prev:20.39,  note:'AI datacenter REIT-alike'},
+  {t:'AMPX', name:'Amprius Technologies',    price:7.71,  prev:8.4,  note:'Silicon-anode batteries'},
+  {t:'BE',   name:'Bloom Energy',            price:221.31, prev:236.3, note:'Fuel cells / DC power'},
+  {t:'COHR', name:'Coherent Corp',           price:232.9,  prev:250.6, note:'Optics / transceivers'},
+  {t:'CRDO', name:'Credo Technology',        price:169.7,  prev:178.5, note:'AEC / connectivity'},
+  {t:'GLW',  name:'Corning',                 price:132,  prev:138.43, note:'Optical fiber / glass'},
+  {t:'NVDA', name:'NVIDIA',                  price:214.13,  prev:217.23, note:'AI accelerators'},
+  {t:'SPCX', name:'SpaceX (+xAI)',           price:146.03,  prev:148.62, note:'Space + AI — IPO 6/12/26'},
+  {t:'IREN', name:'IREN Limited',            price:26.99,  prev:30.39,  note:'AI cloud / datacenters'},
+  {t:'NBIS', name:'Nebius Group',            price:165.47,  prev:188.41, note:'AI cloud infrastructure'},
+  {t:'MRVL', name:'Marvell Technology',      price:227.83,  prev:241.24, note:'Custom silicon / optics'},
+  {t:'DRAM', name:'Roundhill Memory ETF',    price:46.45,  prev:49.33,  note:'ETF — memory complex'},
+  {t:'NOK',   name:'Nokia',                  price:9.14,   prev:9.57,  note:'Telecom networks / RAN'},
+  {t:'NVTS',  name:'Navitas Semiconductor',  price:8.34,   prev:9.23,  note:'GaN & SiC power semis'},
+  {t:'NOW',   name:'ServiceNow',             price:141.97,   prev:148.57,    note:'Enterprise AI software'}
 ];
 
 const CATS = {
@@ -407,7 +407,7 @@ const EVENTS = [
  src:'https://finance.yahoo.com/markets/stocks/articles/bloom-energy-p-500-buzz-200938721.html'},
 {d:'2026-09-28', d2:'2026-09-30', t:'BE', c:'conf', tier:3, s:'C', title:'Yotta 2026, Las Vegas', desc:'Datacenter industry conference.', src:'https://www.bloomenergy.com/events/'},
 {d:'2026-10-13', t:'BE', c:'conf', tier:3, s:'C', title:'TechCrunch Disrupt, San Francisco — Bloom panelist', desc:'Speaking slot 10/13.', src:'https://www.bloomenergy.com/events/'},
-{d:'2026-10-27', t:'BE', c:'earnings', tier:1, s:'E', title:'Q3 2026 earnings — AMC (expected)',
+{d:'2026-10-22', t:'BE', c:'earnings', tier:1, s:'C', title:'Q3 2026 earnings — AMC (expected)',
  desc:'Q2 2026 was the first billion-dollar quarter: $1.065B revenue (+165.5% y/y), non-GAAP EPS $0.78. FY26 guide raised to $3.9–4.2B revenue, ~34% non-GAAP GM, $2.55–2.85 EPS. Backlog disclosure quality is a two-sided catalyst given the short-seller backlog dispute.',
  src:'https://investor.bloomenergy.com/events-and-presentations/events-calendar'},
 {d:'2026-12-18', t:'BE', c:'index', tier:2, s:'S', title:'S&P December rebalance — second S&P 500 window',
@@ -446,7 +446,7 @@ const EVENTS = [
 {d:'2026-10-25', t:'SPCX', c:'supply', tier:2, s:'E', title:'Lockup tranche ~7% (day 135) — last time-based tranche',
  desc:'By roughly this point the public float is estimated to reach ~one third of shares outstanding.',
  src:'https://www.investing.com/analysis/spacex-lockup-countdown-when-shares-may-become-safer-to-buy-200682574'},
-{d:'2026-11-03', t:'SPCX', c:'earnings', tier:1, s:'E', title:'Q3 2026 earnings — AMC (expected), second-ever public print',
+{d:'2026-10-20', t:'SPCX', c:'earnings', tier:1, s:'C', title:'Q3 2026 earnings — AMC (expected), second-ever public print',
  desc:'Not company-announced. First print (2026-08-04) beat at -$0.09 vs -$0.16 est. Consensus now models a swing to positive EPS (~+$0.14).',
  src:'https://finance.yahoo.com/markets/stocks/articles/spacex-q2-2026-earnings-date-170755440.html'},
 {d:'2026-11-19', d2:'2026-11-24', t:'SPCX', c:'supply', tier:1, s:'E', title:'Q3-earnings-linked lockup tranche — up to 28%',
@@ -551,7 +551,7 @@ const EVENTS = [
  src:'https://www.nokia.com/about-us/investors/'},
 
 // ─────────────── NVTS ───────────────
-{d:'2026-11-02', t:'NVTS', c:'earnings', tier:1, s:'E', title:'Q3 2026 earnings — AMC (expected)',
+{d:'2026-11-03', t:'NVTS', c:'earnings', tier:1, s:'C', title:'Q3 2026 earnings — AMC (expected)',
  desc:'Date not yet announced. Estimated from prior-year timing; the most recent confirmed print was Q2 on 2026-07-27. A small float makes the reaction outsized relative to the market cap.',
  src:'https://finance.yahoo.com/quote/NVTS/'},
 
@@ -565,8 +565,8 @@ const EVENTS = [
 /* Refreshed weekly by scripts/update-calendar.mjs — edit by hand only if the
    updater is off. Everything between the AUTO markers is machine-managed. */
 /* <<<AUTO:META>>> */
-const PRICED = '2026-10-09';   // as-of date for the POSITIONS prices below
-const UPDATED = '2026-10-11';  // last successful automated refresh
+const PRICED = '2026-10-16';   // as-of date for the POSITIONS prices below
+const UPDATED = '2026-10-18';  // last successful automated refresh
 /* <<<END:META>>> */
 
 const START = new Date('2026-08-17T00:00:00');
