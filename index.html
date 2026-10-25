@@ -237,22 +237,22 @@ td.d{font-variant-numeric:tabular-nums; white-space:nowrap; color:var(--text-sec
 // tier: 1 = major mover, 2 = standard, 3 = context
 
 const POSITIONS = [
-  {t:'AMKR', name:'Amkor Technology',        price:41.82,   prev:44.05,  note:'OSAT / advanced packaging'},
-  {t:'APLD', name:'Applied Digital',         price:18.05,  prev:20.39,  note:'AI datacenter REIT-alike'},
-  {t:'AMPX', name:'Amprius Technologies',    price:7.71,  prev:8.4,  note:'Silicon-anode batteries'},
-  {t:'BE',   name:'Bloom Energy',            price:221.31, prev:236.3, note:'Fuel cells / DC power'},
-  {t:'COHR', name:'Coherent Corp',           price:232.9,  prev:250.6, note:'Optics / transceivers'},
-  {t:'CRDO', name:'Credo Technology',        price:169.7,  prev:178.5, note:'AEC / connectivity'},
-  {t:'GLW',  name:'Corning',                 price:132,  prev:138.43, note:'Optical fiber / glass'},
-  {t:'NVDA', name:'NVIDIA',                  price:214.13,  prev:217.23, note:'AI accelerators'},
-  {t:'SPCX', name:'SpaceX (+xAI)',           price:146.03,  prev:148.62, note:'Space + AI — IPO 6/12/26'},
-  {t:'IREN', name:'IREN Limited',            price:26.99,  prev:30.39,  note:'AI cloud / datacenters'},
-  {t:'NBIS', name:'Nebius Group',            price:165.47,  prev:188.41, note:'AI cloud infrastructure'},
-  {t:'MRVL', name:'Marvell Technology',      price:227.83,  prev:241.24, note:'Custom silicon / optics'},
-  {t:'DRAM', name:'Roundhill Memory ETF',    price:46.45,  prev:49.33,  note:'ETF — memory complex'},
-  {t:'NOK',   name:'Nokia',                  price:9.14,   prev:9.57,  note:'Telecom networks / RAN'},
-  {t:'NVTS',  name:'Navitas Semiconductor',  price:8.34,   prev:9.23,  note:'GaN & SiC power semis'},
-  {t:'NOW',   name:'ServiceNow',             price:141.97,   prev:148.57,    note:'Enterprise AI software'}
+  {t:'AMKR', name:'Amkor Technology',        price:39.3,   prev:39.05,  note:'OSAT / advanced packaging'},
+  {t:'APLD', name:'Applied Digital',         price:18.25,  prev:19.09,  note:'AI datacenter REIT-alike'},
+  {t:'AMPX', name:'Amprius Technologies',    price:8.18,  prev:7.91,  note:'Silicon-anode batteries'},
+  {t:'BE',   name:'Bloom Energy',            price:193.3, prev:217.77, note:'Fuel cells / DC power'},
+  {t:'COHR', name:'Coherent Corp',           price:209.29,  prev:207.82, note:'Optics / transceivers'},
+  {t:'CRDO', name:'Credo Technology',        price:147.29,  prev:162.77, note:'AEC / connectivity'},
+  {t:'GLW',  name:'Corning',                 price:123.69,  prev:123.99, note:'Optical fiber / glass'},
+  {t:'NVDA', name:'NVIDIA',                  price:210.96,  prev:212.21, note:'AI accelerators'},
+  {t:'SPCX', name:'SpaceX (+xAI)',           price:147.49,  prev:144.75, note:'Space + AI — IPO 6/12/26'},
+  {t:'IREN', name:'IREN Limited',            price:24.905,  prev:25.51,  note:'AI cloud / datacenters'},
+  {t:'NBIS', name:'Nebius Group',            price:158.74,  prev:159.17, note:'AI cloud infrastructure'},
+  {t:'MRVL', name:'Marvell Technology',      price:228.51,  prev:223.47, note:'Custom silicon / optics'},
+  {t:'DRAM', name:'Roundhill Memory ETF',    price:47.06,  prev:45.68,  note:'ETF — memory complex'},
+  {t:'NOK',   name:'Nokia',                  price:8.14,   prev:7.88,  note:'Telecom networks / RAN'},
+  {t:'NVTS',  name:'Navitas Semiconductor',  price:8.38,   prev:8.49,  note:'GaN & SiC power semis'},
+  {t:'NOW',   name:'ServiceNow',             price:158.96,   prev:157,    note:'Enterprise AI software'}
 ];
 
 const CATS = {
@@ -371,7 +371,7 @@ const EVENTS = [
 {d:'2026-09-01', d2:'2026-12-31', t:'IREN', c:'supply', tier:1, s:'C', title:'Horizon 2, 3 and 4 delivery to Microsoft (3 × 50MW)',
  desc:'Horizon 1 (50MW IT load) delivered and accepted 2026-08-13. Three further 50MW deployments guided for delivery "later this year" under the $9.7B / 5-year Microsoft contract at Childress TX. Each acceptance is a discrete revenue-recognition catalyst and a squeeze trigger. Individual dates NOT specified.',
  src:'https://www.globenewswire.com/news-release/2026/08/13/3344413/0/en/iren-delivers-horizon-1-to-microsoft-and-achieves-nvidia-exemplar-cloud-status-on-gb300-nvl72.html'},
-{d:'2026-11-05', t:'IREN', c:'earnings', tier:1, s:'E', title:'Q1 FY2027 earnings (expected)',
+{d:'2026-11-05', t:'IREN', c:'earnings', tier:1, s:'C', title:'Q1 FY2027 earnings (expected)',
  desc:'Q1 FY26 was reported 2026-11-06. Scheduling PR historically lands ~2 weeks prior. Progress against the >$4bn exit-ARR target is the key metric.',
  src:'https://iren.gcs-web.com/news-releases/news-release-details/iren-reports-q1-fy26-results'},
 {d:'2026-12-31', t:'IREN', c:'supply', tier:1, s:'C', title:'Year-end targets: 480MW gross capacity + >$4bn ARR',
@@ -423,7 +423,7 @@ const EVENTS = [
 {d:'2026-09-01', d2:'2026-12-25', t:'AMPX', c:'product', tier:1, s:'E', title:'New SiCore/SiMaxx cell announcements "between now and Christmas"',
  desc:'CEO Tom Stepien and the CFO said at the Canaccord Genuity conference (2026-08-11) to expect new cell announcements before Christmas, with improvements in energy density, power and cycle life. Management-guided, no fixed date.',
  src:'https://www.investing.com/news/transcripts/amprius-at-canaccord-genuity-conference-growth-built-on-silicon-edge-93CH-4852030'},
-{d:'2026-11-05', t:'AMPX', c:'earnings', tier:1, s:'C', title:'Q3 2026 earnings — AMC (expected)',
+{d:'2026-11-10', t:'AMPX', c:'earnings', tier:1, s:'C', title:'Q3 2026 earnings — AMC (expected)',
  desc:'Q2 revenue was $34.0M (+126% y/y) at 27% GM. FY26 guidance raised 2026-08-04 to ≥$140M revenue, ≥28% GM, ≥$4.0M adjusted EBITDA. Watch the balance sheet — cash fell to $74.5M at 6/30 from $90.5M at YE25, making an equity raise the most plausible unscheduled negative.',
  src:'https://ir.amprius.com/financial-information/financial-results'},
 {d:'2026-08-17', d2:'2026-12-31', t:'AMPX', c:'supply', tier:2, s:'E', title:'Additional defense/drone orders — unscheduled',
@@ -543,7 +543,7 @@ const EVENTS = [
 {d:'2026-10-22', t:'NOK', c:'earnings', tier:1, s:'C', title:'Q3 2026 earnings — before the US open',
  desc:'Nokia reports on Finnish market hours, so the ADR gaps at the NYSE open rather than trading the print. Network Infrastructure margin and the datacenter interconnect commentary are what matter to this complex.',
  src:'https://www.nokia.com/about-us/investors/'},
-{d:'2026-10-27', t:'NOK', c:'dividend', tier:3, s:'E', title:'Q4 dividend installment ex-date (~$0.04)',
+{d:'2026-10-27', t:'NOK', c:'dividend', tier:3, s:'C', title:'Q4 dividend installment ex-date (~$0.04)',
  desc:'Pattern-derived: the prior installment went ex 2026-07-28. Nokia pays its annual dividend in four installments authorised at the AGM, so this is a schedule estimate, not a declaration.',
  src:'https://www.nokia.com/about-us/investors/'},
 {d:'2026-11-10', t:'NOK', c:'dividend', tier:3, s:'E', title:'Q4 dividend installment pay date (~$0.04)',
@@ -565,8 +565,8 @@ const EVENTS = [
 /* Refreshed weekly by scripts/update-calendar.mjs — edit by hand only if the
    updater is off. Everything between the AUTO markers is machine-managed. */
 /* <<<AUTO:META>>> */
-const PRICED = '2026-10-16';   // as-of date for the POSITIONS prices below
-const UPDATED = '2026-10-18';  // last successful automated refresh
+const PRICED = '2026-10-23';   // as-of date for the POSITIONS prices below
+const UPDATED = '2026-10-25';  // last successful automated refresh
 /* <<<END:META>>> */
 
 const START = new Date('2026-08-17T00:00:00');
