@@ -237,22 +237,22 @@ td.d{font-variant-numeric:tabular-nums; white-space:nowrap; color:var(--text-sec
 // tier: 1 = major mover, 2 = standard, 3 = context
 
 const POSITIONS = [
-  {t:'AMKR', name:'Amkor Technology',        price:32.82,   prev:30.49,  note:'OSAT / advanced packaging'},
-  {t:'APLD', name:'Applied Digital',         price:15.55,  prev:14.17,  note:'AI datacenter REIT-alike'},
-  {t:'AMPX', name:'Amprius Technologies',    price:8.72,  prev:7.52,  note:'Silicon-anode batteries'},
-  {t:'BE',   name:'Bloom Energy',            price:173.24, prev:167.52, note:'Fuel cells / DC power'},
-  {t:'COHR', name:'Coherent Corp',           price:192.81,  prev:169.76, note:'Optics / transceivers'},
-  {t:'CRDO', name:'Credo Technology',        price:120.51,  prev:112.33, note:'AEC / connectivity'},
-  {t:'GLW',  name:'Corning',                 price:106.13,  prev:103.43, note:'Optical fiber / glass'},
-  {t:'NVDA', name:'NVIDIA',                  price:186.64,  prev:181.6, note:'AI accelerators'},
-  {t:'SPCX', name:'SpaceX (+xAI)',           price:134.27,  prev:123.62, note:'Space + AI — IPO 6/12/26'},
-  {t:'IREN', name:'IREN Limited',            price:21.64,  prev:18.03,  note:'AI cloud / datacenters'},
-  {t:'NBIS', name:'Nebius Group',            price:129.49,  prev:120.37, note:'AI cloud infrastructure'},
-  {t:'MRVL', name:'Marvell Technology',      price:141.2,  prev:133.55, note:'Custom silicon / optics'},
-  {t:'DRAM', name:'Roundhill Memory ETF',    price:39.29,  prev:37.01,  note:'ETF — memory complex'},
-  {t:'NOK',   name:'Nokia',                  price:7.66,   prev:7.46,  note:'Telecom networks / RAN'},
-  {t:'NVTS',  name:'Navitas Semiconductor',  price:8.61,   prev:7.86,  note:'GaN & SiC power semis'},
-  {t:'NOW',   name:'ServiceNow',             price:101.97,   prev:102.36,    note:'Enterprise AI software'}
+  {t:'AMKR', name:'Amkor Technology',        price:36.11,   prev:37.12,  note:'OSAT / advanced packaging'},
+  {t:'APLD', name:'Applied Digital',         price:15.97,  prev:16.95,  note:'AI datacenter REIT-alike'},
+  {t:'AMPX', name:'Amprius Technologies',    price:7.93,  prev:8.35,  note:'Silicon-anode batteries'},
+  {t:'BE',   name:'Bloom Energy',            price:191.99, prev:201.93, note:'Fuel cells / DC power'},
+  {t:'COHR', name:'Coherent Corp',           price:218.15,  prev:232.08, note:'Optics / transceivers'},
+  {t:'CRDO', name:'Credo Technology',        price:131.51,  prev:139.81, note:'AEC / connectivity'},
+  {t:'GLW',  name:'Corning',                 price:114.08,  prev:119.22, note:'Optical fiber / glass'},
+  {t:'NVDA', name:'NVIDIA',                  price:162.85,  prev:166.19, note:'AI accelerators'},
+  {t:'SPCX', name:'SpaceX (+xAI)',           price:139.11,  prev:139.94, note:'Space + AI — IPO 6/12/26'},
+  {t:'IREN', name:'IREN Limited',            price:18.17,  prev:19.48,  note:'AI cloud / datacenters'},
+  {t:'NBIS', name:'Nebius Group',            price:115.88,  prev:128.64, note:'AI cloud infrastructure'},
+  {t:'MRVL', name:'Marvell Technology',      price:156.76,  prev:164.45, note:'Custom silicon / optics'},
+  {t:'DRAM', name:'Roundhill Memory ETF',    price:42.4,  prev:43.66,  note:'ETF — memory complex'},
+  {t:'NOK',   name:'Nokia',                  price:8.07,   prev:8.28,  note:'Telecom networks / RAN'},
+  {t:'NVTS',  name:'Navitas Semiconductor',  price:8.95,   prev:9.56,  note:'GaN & SiC power semis'},
+  {t:'NOW',   name:'ServiceNow',             price:102.25,   prev:100.66,    note:'Enterprise AI software'}
 ];
 
 const CATS = {
@@ -357,7 +357,7 @@ const EVENTS = [
 {d:'2026-10-12', d2:'2026-10-15', t:'CRDO', c:'conf', tier:2, s:'C', title:'OCP Global Summit — OmniConnect contribution',
  desc:'Credo announced 2026-08-10 it will contribute its OmniConnect scale-in interconnect to the Open Compute Project, targeting the AI-inference memory wall and "reduced dependence on costly, capacity-constrained HBM." The Summit is the natural venue for the standardization reveal.',
  src:'https://www.opencompute.org/summit/global-summit'},
-{d:'2026-11-30', t:'CRDO', c:'earnings', tier:1, s:'E', title:'Q2 FY2027 earnings (expected)',
+{d:'2026-12-01', t:'CRDO', c:'earnings', tier:1, s:'C', title:'Q2 FY2027 earnings (expected)',
  desc:'Q2 FY26 was reported 2026-12-01. Second and final CRDO print in the window. Net cash, no convertible debt, only ~3.6% short float — the risk here is a guidance/margin miss, not a positioning unwind.',
  src:'https://www.tipranks.com/stocks/crdo/earnings'},
 {d:'2026-12-11', t:'CRDO', c:'index', tier:2, s:'E', title:'Nasdaq-100 annual reconstitution — CRDO a credible add',
@@ -565,8 +565,8 @@ const EVENTS = [
 /* Refreshed weekly by scripts/update-calendar.mjs — edit by hand only if the
    updater is off. Everything between the AUTO markers is machine-managed. */
 /* <<<AUTO:META>>> */
-const PRICED = '2026-11-06';   // as-of date for the POSITIONS prices below
-const UPDATED = '2026-11-08';  // last successful automated refresh
+const PRICED = '2026-11-13';   // as-of date for the POSITIONS prices below
+const UPDATED = '2026-11-15';  // last successful automated refresh
 /* <<<END:META>>> */
 
 const START = new Date('2026-08-17T00:00:00');
