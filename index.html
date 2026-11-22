@@ -237,22 +237,22 @@ td.d{font-variant-numeric:tabular-nums; white-space:nowrap; color:var(--text-sec
 // tier: 1 = major mover, 2 = standard, 3 = context
 
 const POSITIONS = [
-  {t:'AMKR', name:'Amkor Technology',        price:36.11,   prev:37.12,  note:'OSAT / advanced packaging'},
-  {t:'APLD', name:'Applied Digital',         price:15.97,  prev:16.95,  note:'AI datacenter REIT-alike'},
-  {t:'AMPX', name:'Amprius Technologies',    price:7.93,  prev:8.35,  note:'Silicon-anode batteries'},
-  {t:'BE',   name:'Bloom Energy',            price:191.99, prev:201.93, note:'Fuel cells / DC power'},
-  {t:'COHR', name:'Coherent Corp',           price:218.15,  prev:232.08, note:'Optics / transceivers'},
-  {t:'CRDO', name:'Credo Technology',        price:131.51,  prev:139.81, note:'AEC / connectivity'},
-  {t:'GLW',  name:'Corning',                 price:114.08,  prev:119.22, note:'Optical fiber / glass'},
-  {t:'NVDA', name:'NVIDIA',                  price:162.85,  prev:166.19, note:'AI accelerators'},
-  {t:'SPCX', name:'SpaceX (+xAI)',           price:139.11,  prev:139.94, note:'Space + AI — IPO 6/12/26'},
-  {t:'IREN', name:'IREN Limited',            price:18.17,  prev:19.48,  note:'AI cloud / datacenters'},
-  {t:'NBIS', name:'Nebius Group',            price:115.88,  prev:128.64, note:'AI cloud infrastructure'},
-  {t:'MRVL', name:'Marvell Technology',      price:156.76,  prev:164.45, note:'Custom silicon / optics'},
-  {t:'DRAM', name:'Roundhill Memory ETF',    price:42.4,  prev:43.66,  note:'ETF — memory complex'},
-  {t:'NOK',   name:'Nokia',                  price:8.07,   prev:8.28,  note:'Telecom networks / RAN'},
-  {t:'NVTS',  name:'Navitas Semiconductor',  price:8.95,   prev:9.56,  note:'GaN & SiC power semis'},
-  {t:'NOW',   name:'ServiceNow',             price:102.25,   prev:100.66,    note:'Enterprise AI software'}
+  {t:'AMKR', name:'Amkor Technology',        price:30.24,   prev:34.13,  note:'OSAT / advanced packaging'},
+  {t:'APLD', name:'Applied Digital',         price:11.49,  prev:13.98,  note:'AI datacenter REIT-alike'},
+  {t:'AMPX', name:'Amprius Technologies',    price:5.77,  prev:6.4,  note:'Silicon-anode batteries'},
+  {t:'BE',   name:'Bloom Energy',            price:142.39, prev:168.11, note:'Fuel cells / DC power'},
+  {t:'COHR', name:'Coherent Corp',           price:187.22,  prev:214.94, note:'Optics / transceivers'},
+  {t:'CRDO', name:'Credo Technology',        price:99.86,  prev:117.76, note:'AEC / connectivity'},
+  {t:'GLW',  name:'Corning',                 price:94.38,  prev:105.97, note:'Optical fiber / glass'},
+  {t:'NVDA', name:'NVIDIA',                  price:125.53,  prev:145.98, note:'AI accelerators'},
+  {t:'SPCX', name:'SpaceX (+xAI)',           price:127.79,  prev:138.43, note:'Space + AI — IPO 6/12/26'},
+  {t:'IREN', name:'IREN Limited',            price:11.82,  prev:14.41,  note:'AI cloud / datacenters'},
+  {t:'NBIS', name:'Nebius Group',            price:81.31,  prev:96.92, note:'AI cloud infrastructure'},
+  {t:'MRVL', name:'Marvell Technology',      price:122.28,  prev:138.47, note:'Custom silicon / optics'},
+  {t:'DRAM', name:'Roundhill Memory ETF',    price:33.36,  prev:38.43,  note:'ETF — memory complex'},
+  {t:'NOK',   name:'Nokia',                  price:6.88,   prev:7.5,  note:'Telecom networks / RAN'},
+  {t:'NVTS',  name:'Navitas Semiconductor',  price:6.08,   prev:7.17,  note:'GaN & SiC power semis'},
+  {t:'NOW',   name:'ServiceNow',             price:87.61,   prev:88.87,    note:'Enterprise AI software'}
 ];
 
 const CATS = {
@@ -347,8 +347,8 @@ const EVENTS = [
  src:'https://www.tipranks.com/stocks/amkr/earnings'},
 {d:'2026-11-12', t:'AMKR', c:'dividend', tier:3, s:'E', title:'Q4 dividend declaration — historical raise spot',
  desc:'Amkor has historically raised the dividend at the November declaration (2025-11-12: $0.08269 → $0.08352).', src:'https://ir.amkor.com/stock-information/dividends-splits'},
-{d:'2026-12-02', t:'AMKR', c:'dividend', tier:3, s:'E', title:'Q4 ex-dividend / record date', desc:'Based on 2025 pattern (ex/record 2025-12-03).', src:'https://ir.amkor.com/stock-information/dividends-splits'},
-{d:'2026-12-22', t:'AMKR', c:'dividend', tier:3, s:'E', title:'Q4 dividend pay date', desc:'Based on 2025 pattern (paid 2025-12-23).', src:'https://ir.amkor.com/stock-information/dividends-splits'},
+{d:'2026-12-09', t:'AMKR', c:'dividend', tier:3, s:'C', title:'Q4 ex-dividend / record date', desc:'Based on 2025 pattern (ex/record 2025-12-03).', src:'https://ir.amkor.com/stock-information/dividends-splits'},
+{d:'2026-12-29', t:'AMKR', c:'dividend', tier:3, s:'C', title:'Q4 dividend pay date', desc:'Based on 2025 pattern (paid 2025-12-23).', src:'https://ir.amkor.com/stock-information/dividends-splits'},
 
 // ─────────────── CRDO ───────────────
 {d:'2026-09-01', t:'CRDO', c:'earnings', tier:1, s:'C', title:'Q1 FY2027 earnings — AMC, 2:00pm PT call',
@@ -565,8 +565,8 @@ const EVENTS = [
 /* Refreshed weekly by scripts/update-calendar.mjs — edit by hand only if the
    updater is off. Everything between the AUTO markers is machine-managed. */
 /* <<<AUTO:META>>> */
-const PRICED = '2026-11-13';   // as-of date for the POSITIONS prices below
-const UPDATED = '2026-11-15';  // last successful automated refresh
+const PRICED = '2026-11-20';   // as-of date for the POSITIONS prices below
+const UPDATED = '2026-11-22';  // last successful automated refresh
 /* <<<END:META>>> */
 
 const START = new Date('2026-08-17T00:00:00');
